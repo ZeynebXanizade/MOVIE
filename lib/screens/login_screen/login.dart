@@ -1,8 +1,8 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_dovie/screens/login_screen/confirm_password.dart';
-import 'package:movie_dovie/screens/login_screen/email_field.dart';
-import 'package:movie_dovie/screens/login_screen/password_field.dart';
+
+import 'package:movie_dovie/screens/login_screen/text.dart';
+
 import 'package:movie_dovie/widgets/background_image_widget.dart';
 
 class Login extends StatelessWidget {
@@ -43,7 +43,9 @@ class Login extends StatelessWidget {
                     fontWeight: FontWeight.w400),
               ),
               10.verticalSpace,
-              const EmailField(),
+              const Texts(
+                text: 'Enter  Email',
+              ),
               20.verticalSpace,
               Text(
                 'Password',
@@ -54,7 +56,7 @@ class Login extends StatelessWidget {
                 ),
               ),
               10.verticalSpace,
-              const PasswordField(),
+              const Texts(text: 'Enter  password'),
               20.verticalSpace,
               Text(
                 'Confirm Password',
@@ -64,7 +66,9 @@ class Login extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              const ConfirmPassword(),
+              const Texts(
+                text: 'Confirm password',
+              ),
               84.verticalSpace,
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 66.rw),

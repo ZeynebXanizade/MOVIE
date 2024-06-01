@@ -1,9 +1,11 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 
-class PasswordField extends StatelessWidget {
-  const PasswordField({
+class Texts extends StatelessWidget {
+  final String text;
+  const Texts({
     super.key,
+    required this.text,
   });
 
   @override
@@ -16,7 +18,7 @@ class PasswordField extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           disabledBorder: const OutlineInputBorder(),
-          hintText: 'Enter Password',
+          hintText: text,
           fillColor: const Color(0xFFFFFFFF),
           hintStyle: TextStyle(
             fontSize: 14.rt,
