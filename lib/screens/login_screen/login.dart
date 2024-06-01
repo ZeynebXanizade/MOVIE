@@ -118,7 +118,7 @@ class Login extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 90.rw),
                 child: const Text(
-                  'Login to my account sssss',
+                  'Login to my account',
                   style: TextStyle(
                       color: Color(0xFFFFFFFF),
                       fontSize: 16,
