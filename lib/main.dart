@@ -1,10 +1,9 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_dovie/screens/login_screen/login.dart';
-import 'package:movie_dovie/screens/onboarding_screen/on_boarding.dart';
-import 'package:movie_dovie/screens/welcome_screen/welcome_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_dovie/screens/register_screen/login.dart';
 
-void main() => runApp(const MovieDovie());
+void main() => runApp(const ProviderScope(child: MovieDovie()));
 
 class MovieDovie extends StatelessWidget {
   const MovieDovie({super.key});
@@ -17,7 +16,7 @@ class MovieDovie extends StatelessWidget {
       app: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        home: Login(),
+        home: Register(),
       ),
     );
   }

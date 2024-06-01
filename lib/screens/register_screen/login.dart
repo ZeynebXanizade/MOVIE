@@ -1,12 +1,12 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 
-import 'package:movie_dovie/screens/login_screen/text.dart';
+import 'package:movie_dovie/screens/register_screen/text.dart';
 
 import 'package:movie_dovie/widgets/background_image_widget.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Register extends StatelessWidget {
+  const Register({super.key});
 
   @override
   Widget build(BuildContext context) {
