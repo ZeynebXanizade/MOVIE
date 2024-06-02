@@ -1,24 +1,31 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
-
-import 'package:movie_dovie/screens/register_screen/text.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_dovie/widgets/custom_text_field.dart';
+import 'package:movie_dovie/screens/register_screen/register.dart';
 import 'package:movie_dovie/widgets/background_image_widget.dart';
 
-class Register extends StatelessWidget {
-  const Register({super.key});
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackGroundImageWidget(
-        child: Padding(
-          padding: EdgeInsets.only(top: 101.rh, left: 21.rw, right: 20.rw),
+          child: Padding(
+        padding: EdgeInsets.only(left: 21.rw, top: 101.rh, right: 20.rw),
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Create an account',
+                'Login to your  account',
                 style: TextStyle(
                   color: const Color(0xFFFFFFFF),
                   fontSize: 24.rt,
@@ -27,7 +34,7 @@ class Register extends StatelessWidget {
               ),
               15.verticalSpace,
               Text(
-                'Welcome friend, enter your details so lets\nget started in ordering a movie',
+                'Good to see you again, enter your details\nbelow to continue ordering.',
                 style: TextStyle(
                   color: const Color(0xFFFFFFFF),
                   fontSize: 14.rt,
@@ -43,8 +50,15 @@ class Register extends StatelessWidget {
                     fontWeight: FontWeight.w400),
               ),
               10.verticalSpace,
-              const Texts(
-                text: 'Enter  Email',
+              CustomTextField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter Something';
+                  }
+                  return null;
+                },
+                text: 'Enter Email',
+                textInputAction: TextInputAction.next,
               ),
               20.verticalSpace,
               Text(
@@ -56,20 +70,18 @@ class Register extends StatelessWidget {
                 ),
               ),
               10.verticalSpace,
-              const Texts(text: 'Enter  password'),
-              20.verticalSpace,
-              Text(
-                'Confirm Password',
-                style: TextStyle(
-                  color: const Color(0xFFFFFFFF),
-                  fontSize: 12.rt,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const Texts(
-                text: 'Confirm password',
-              ),
-              84.verticalSpace,
+              CustomTextField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Password can't be empty";
+                    } else if (value.length < 10) {
+                      return "Password must be longer than 10 characters";
+                    }
+                    return null;
+                  },
+                  text: 'Enter  password',
+                  textInputAction: TextInputAction.done),
+              160.verticalSpace,
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 66.rw),
                 width: 204.rw,
@@ -109,7 +121,7 @@ class Register extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Create an account',
+                    'Log in',
                     style: TextStyle(
                       fontSize: 14.rt,
                       fontWeight: FontWeight.w700,
@@ -118,21 +130,26 @@ class Register extends StatelessWidget {
                   ),
                 ),
               ),
-              24.verticalSpace,
+              16.verticalSpace,
               Padding(
                 padding: EdgeInsets.only(left: 90.rw),
-                child: const Text(
-                  'Login to my account',
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
+                child: InkWell(
+                  onTap: () {
+                    Flexify.go(Register());
+                  },
+                  child: const Text(
+                    'Go to register',
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }
