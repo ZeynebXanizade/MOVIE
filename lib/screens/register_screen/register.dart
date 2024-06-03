@@ -11,23 +11,42 @@ import 'package:movie_dovie/widgets/custom_text_field.dart';
 
 import 'package:movie_dovie/widgets/background_image_widget.dart';
 
-class Register extends ConsumerWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  String _error = 'Oops';
-  final _formKey = GlobalKey<FormState>();
+class Register extends ConsumerStatefulWidget {
   Register({super.key});
+
+  @override
+  ConsumerState<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends ConsumerState<Register> {
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late String _error;
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _error = 'Oops';
+
+    super.initState();
+  }
+
   Future<void> register() async {
+    debugPrint(_emailController.text);
     try {
-      await AuthServise().signInWithEmailAndPassword(
+      await AuthServise().signUpWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
+
+      debugPrint(_passwordController.text);
     } on FirebaseAuthException catch (e) {
       _error = e.message.toString();
     }
   }
 
+  // final themeModelLight = ThemeData.light();
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: BackGroundImageWidget(
         child: Padding(
@@ -38,6 +57,33 @@ class Register extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Flexify.go(Theme(
+                              data: ThemeData.dark(), child: build(context)));
+                        },
+                        child: Icon(
+                          Icons.dark_mode,
+                          color: Colors.black,
+                          size: 20.rs,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Flexify.go(Theme(
+                              data: ThemeData.light(), child: build(context)));
+                        },
+                        child: Icon(
+                          Icons.light_mode,
+                          color: Colors.lightBlue,
+                          size: 20.rs,
+                        ),
+                      ),
+                    ],
+                  ),
                   Text(
                     'Create an account',
                     style: TextStyle(
@@ -65,10 +111,12 @@ class Register extends ConsumerWidget {
                   ),
                   10.verticalSpace,
                   CustomTextField(
+                    controller: _emailController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Enter Something';
+                        return 'Empty or Wrong Email';
                       }
+
                       return null;
                     },
                     text: 'Enter  Email',
@@ -85,6 +133,7 @@ class Register extends ConsumerWidget {
                   ),
                   10.verticalSpace,
                   CustomTextField(
+                    controller: _passwordController,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Password can't be empty";
@@ -106,6 +155,7 @@ class Register extends ConsumerWidget {
                     ),
                   ),
                   CustomTextField(
+                    controller: _passwordController,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Password can't be empty";
@@ -145,8 +195,8 @@ class Register extends ConsumerWidget {
                   ),
                   20.verticalSpace,
                   ElevatedButton(
-                    onPressed: () {
-                      null;
+                    onPressed: () async {
+                      await register();
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -172,9 +222,7 @@ class Register extends ConsumerWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 90.rw),
                     child: InkWell(
-                      onTap: () {
-                        Flexify.go(const LoginScreen());
-                      },
+                      onTap: () {},
                       child: const Text(
                         'Login to my account',
                         style: TextStyle(

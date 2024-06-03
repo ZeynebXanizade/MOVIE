@@ -1,14 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/screens/login_screen.dart/login_screen.dart';
+import 'package:movie_dovie/firebase_options.dart';
+
 import 'package:movie_dovie/screens/register_screen/register.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 // ...
 
-void main() => runApp(const ProviderScope(child: MovieDovie()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(ProviderScope(child: MovieDovie()));
+}
 
 class MovieDovie extends StatelessWidget {
   const MovieDovie({super.key});
@@ -22,6 +28,8 @@ class MovieDovie extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         home: Register(),
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
       ),
     );
   }

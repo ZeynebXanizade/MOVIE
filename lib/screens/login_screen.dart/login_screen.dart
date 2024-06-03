@@ -1,18 +1,48 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_dovie/servises_auth.dart';
 import 'package:movie_dovie/widgets/custom_text_field.dart';
 import 'package:movie_dovie/screens/register_screen/register.dart';
 import 'package:movie_dovie/widgets/background_image_widget.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+  LoginScreen({super.key});
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late String _error;
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _error = 'Oops';
+
+    super.initState();
+  }
+
+  Future<void> signIn() async {
+    try {
+      await AuthServise().signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      _error = e.message.toString();
+    }
+  }
+
+  Future<void> sinOut() async {
+    try {
+      await AuthServise().signOut();
+    } on FirebaseAuthException catch (e) {
+      _error = e.message.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +81,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               10.verticalSpace,
               CustomTextField(
+                controller: _emailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Enter Something';
@@ -71,6 +102,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               10.verticalSpace,
               CustomTextField(
+                  controller: _passwordController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Password can't be empty";
@@ -109,7 +141,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               20.verticalSpace,
               ElevatedButton(
-                onPressed: null,
+                onPressed: () {
+                  null;
+                },
                 child: Container(
                   alignment: Alignment.center,
                   width: 335.rw,

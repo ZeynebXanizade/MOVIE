@@ -3,20 +3,23 @@ import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
+  final TextEditingController controller;
   final String text;
   final TextInputAction textInputAction;
   final String? Function(String?)? validator;
   const CustomTextField({
-    super.key,
+    Key? key,
+    required this.controller,
     required this.text,
     required this.textInputAction,
     required this.validator,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      // autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) => validator!(value!),
       textInputAction: textInputAction,
       decoration: InputDecoration(
