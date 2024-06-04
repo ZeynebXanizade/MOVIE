@@ -21,12 +21,14 @@ class Register extends ConsumerStatefulWidget {
 class _RegisterState extends ConsumerState<Register> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
   late String _error;
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
     _error = 'Oops';
 
     super.initState();
@@ -137,8 +139,8 @@ class _RegisterState extends ConsumerState<Register> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Password can't be empty";
-                      } else if (value.length < 10) {
-                        return "Password must be longer than 10 characters";
+                      } else if (value.length < 6) {
+                        return "Password must be longer than 6 characters";
                       }
                       return null;
                     },
@@ -155,12 +157,15 @@ class _RegisterState extends ConsumerState<Register> {
                     ),
                   ),
                   CustomTextField(
-                    controller: _passwordController,
+                    controller: _confirmPasswordController,
                     validator: (value) {
+                      if (value != _passwordController.text) {
+                        return 'not a same passwords';
+                      }
                       if (value!.isEmpty) {
                         return "Password can't be empty";
-                      } else if (value.length < 10) {
-                        return "Password must be longer than 10 characters";
+                      } else if (value.length < 6) {
+                        return "Password must be longer than 6 characters";
                       }
                       return null;
                     },
@@ -200,7 +205,7 @@ class _RegisterState extends ConsumerState<Register> {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      width: 335.rw,
+                      width: 320.rw,
                       height: 51.rh,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -222,7 +227,9 @@ class _RegisterState extends ConsumerState<Register> {
                   Padding(
                     padding: EdgeInsets.only(left: 90.rw),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Flexify.go(LoginScreen());
+                      },
                       child: const Text(
                         'Login to my account',
                         style: TextStyle(

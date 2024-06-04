@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:movie_dovie/servises_auth.dart';
 import 'package:movie_dovie/widgets/custom_text_field.dart';
 import 'package:movie_dovie/screens/register_screen/register.dart';
@@ -14,9 +15,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _FormKey = GlobalKey<FormState>();
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  final _formKey = GlobalKey<FormState>();
+
   late String _error;
+
   @override
   void initState() {
     _emailController = TextEditingController();
@@ -24,6 +29,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     _error = 'Oops';
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   Future<void> signIn() async {
@@ -46,6 +58,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       body: BackGroundImageWidget(
           child: Padding(
         padding: EdgeInsets.only(left: 21.rw, top: 101.rh, right: 20.rw),
@@ -81,10 +94,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               10.verticalSpace,
               CustomTextField(
+                key: _FormKey,
                 controller: _emailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Enter Something';
+                  }
+                  if (!value.contains("@")) {
+                    return 'Please write corret mail';
                   }
                   return null;
                 },
@@ -106,8 +123,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Password can't be empty";
-                    } else if (value.length < 10) {
-                      return "Password must be longer than 10 characters";
+                    } else if (value.length < 6) {
+                      return "Password must be longer than 6 characters";
                     }
                     return null;
                   },
@@ -142,7 +159,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               20.verticalSpace,
               ElevatedButton(
                 onPressed: () {
-                  null;
+                  signIn();
+                  debugPrint(_error);
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -155,7 +173,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ),
                   child: Text(
-                    'Log in',
+                    'Sign in',
                     style: TextStyle(
                       fontSize: 14.rt,
                       fontWeight: FontWeight.w700,

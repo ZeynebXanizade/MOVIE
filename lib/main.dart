@@ -3,6 +3,7 @@ import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_dovie/firebase_options.dart';
+import 'package:movie_dovie/screens/login_screen.dart/login_screen.dart';
 
 import 'package:movie_dovie/screens/register_screen/register.dart';
 
@@ -27,7 +28,7 @@ class MovieDovie extends StatelessWidget {
       app: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        home: Register(),
+        home: LoginScreen(),
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
       ),
