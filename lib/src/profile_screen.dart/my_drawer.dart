@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_dovie/src/profile_screen.dart/my_list_tile.dart';
 
-import 'package:movie_dovie/profile_screen.dart/my_list_tile.dart';
-import 'package:movie_dovie/screens/login_screen.dart/login_screen.dart';
-import 'package:movie_dovie/screens/register_screen/register.dart';
 
 class myDrawer extends StatelessWidget {
   final void Function()? onProfileTap;

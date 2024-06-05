@@ -4,12 +4,11 @@ import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/screens/login_screen.dart/login_screen.dart';
 import 'package:movie_dovie/servises_auth.dart';
 
-import 'package:movie_dovie/widgets/custom_text_field.dart';
-
-import 'package:movie_dovie/widgets/background_image_widget.dart';
+import '../../widgets/background_image_widget.dart';
+import '../../widgets/custom_text_field.dart';
+import '../login_screen.dart/login_screen.dart';
 
 class Register extends ConsumerStatefulWidget {
   Register({super.key});

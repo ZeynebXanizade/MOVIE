@@ -1,9 +1,8 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/profile_screen.dart/my_drawer.dart';
-import 'package:movie_dovie/profile_screen.dart/my_list_tile.dart';
-import 'package:movie_dovie/widgets/custom_text_field.dart';
+import 'package:movie_dovie/src/profile_screen.dart/my_drawer.dart';
+import '../widgets/custom_text_field.dart';
 
 class UserAccountConfiguration extends ConsumerStatefulWidget {
   const UserAccountConfiguration({super.key});

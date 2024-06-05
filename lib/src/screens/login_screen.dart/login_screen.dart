@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:movie_dovie/profile_screen.dart/user_account_configuration.dart';
-
 import 'package:movie_dovie/servises_auth.dart';
-import 'package:movie_dovie/widgets/custom_text_field.dart';
-import 'package:movie_dovie/screens/register_screen/register.dart';
-import 'package:movie_dovie/widgets/background_image_widget.dart';
+import 'package:movie_dovie/src/screens/tabbar_screen/bottom_navbar_screen.dart';
+
+import '../../profile_screen.dart/user_account_configuration.dart';
+import '../../widgets/background_image_widget.dart';
+import '../../widgets/custom_text_field.dart';
+import '../home_screen/home_screen.dart';
+import '../register_screen/register.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   @override
@@ -173,8 +174,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  UserAccountConfiguration()));
+                              builder: (context) => BottomNavbarScreen()));
                     } else if (errorMessage != null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('incorrect mail or password')),

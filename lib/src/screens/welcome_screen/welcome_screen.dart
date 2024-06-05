@@ -1,7 +1,6 @@
 import 'package:flexify/flexify.dart';
-
 import 'package:flutter/material.dart';
-import 'package:movie_dovie/widgets/background_image_widget.dart';
+import '../../widgets/background_image_widget.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
