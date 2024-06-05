@@ -19,11 +19,16 @@ class Register extends ConsumerStatefulWidget {
 }
 
 class _RegisterState extends ConsumerState<Register> {
+  final RegExp emailRegExp = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
   late String _error;
-  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
+  bool? isRegister;
+  String? errorMessage;
+
   @override
   void initState() {
     _emailController = TextEditingController();
@@ -35,13 +40,20 @@ class _RegisterState extends ConsumerState<Register> {
   }
 
   Future<void> register() async {
-    debugPrint(_emailController.text);
     try {
       await AuthServise().signUpWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
+      setState(() {
+        isRegister = true;
+      });
 
       debugPrint(_passwordController.text);
     } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+
+        isRegister = false;
+      });
       _error = e.message.toString();
     }
   }
@@ -55,7 +67,7 @@ class _RegisterState extends ConsumerState<Register> {
           padding: EdgeInsets.only(top: 101.rh, left: 21.rw, right: 20.rw),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
+              key: _formKey1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -117,6 +129,9 @@ class _RegisterState extends ConsumerState<Register> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Empty or Wrong Email';
+                      }
+                      if (!emailRegExp.hasMatch(value)) {
+                        return 'Please enter only alphabetical characters and spaces.';
                       }
 
                       return null;
@@ -202,6 +217,13 @@ class _RegisterState extends ConsumerState<Register> {
                   ElevatedButton(
                     onPressed: () async {
                       await register();
+
+                      if (isRegister == true) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      }
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -238,6 +260,11 @@ class _RegisterState extends ConsumerState<Register> {
                             fontWeight: FontWeight.w700),
                       ),
                     ),
+                  ),
+                  Container(
+                    height: 50.rh,
+                    width: 200.rw,
+                    child: errorMessage != null ? Text(errorMessage!) : null,
                   ),
                 ],
               ),

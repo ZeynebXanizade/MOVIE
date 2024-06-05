@@ -3,13 +3,13 @@ import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String text;
-  final TextInputAction textInputAction;
+  final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
   const CustomTextField({
     Key? key,
-    required this.controller,
+    this.controller,
     required this.text,
     required this.textInputAction,
     required this.validator,
