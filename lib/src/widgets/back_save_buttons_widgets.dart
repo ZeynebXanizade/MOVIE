@@ -1,20 +1,19 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_dovie/src/screens/home_screen/home_screen.dart';
-
 import '../global/const/colors.dart';
 
 class BackAndSaveButtonWidgets extends StatelessWidget {
-  final String imageText;
+  final Widget child;
+  final Function()? onTap;
   const BackAndSaveButtonWidgets({
     super.key,
-    required this.imageText,
+    required this.child, this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap:onTap?? () {
         Flexify.back();
       },
       child: Container(
@@ -24,10 +23,7 @@ class BackAndSaveButtonWidgets extends StatelessWidget {
           decoration: BoxDecoration(
               color: ConstantColor.purpleColor,
               borderRadius: BorderRadius.circular(15)),
-          child: Image.asset(
-            "assets/images/$imageText.png",
-            color: ConstantColor.whiteColor,
-          )),
+          child: child),
     );
   }
 }

@@ -35,10 +35,13 @@ class GridviewWidget extends ConsumerWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Flexify.go(DetailScreen(
-                    index: index,
-                    data: data,
-                  ));
+                  Flexify.go(
+                      DetailScreen(
+                        index: index,
+                        data: data,
+                      ),
+                      animation: FlexifyRouteAnimations.slideFromBottom,
+                      animationDuration: const Duration(milliseconds: 400));
                 },
                 child: ContainerWidget(data: data, index: index),
               );

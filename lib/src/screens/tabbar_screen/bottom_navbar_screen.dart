@@ -1,8 +1,11 @@
 import 'package:flexify/flexify.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:movie_dovie/src/global/const/colors.dart';
 import 'package:movie_dovie/src/screens/home_screen/home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movie_dovie/src/screens/search_screen/search_screen.dart';
 import 'widget/tab_widget.dart';
 
 class BottomNavbarScreen extends StatefulWidget {
@@ -44,7 +47,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                 children: [
                   const HomeScreen(),
                   const HomeScreen(),
-                  0.verticalSpace,
+                  SearchScreen(),
                   const HomeScreen(),
                   const HomeScreen(),
                 ],
@@ -62,34 +65,20 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            Transform.scale(
-              scale: 1.1,
-              child: SvgPicture.asset(
-                "assets/svg/navbar.svg",
-                fit: BoxFit.cover,
-              ),
-            ),
             Positioned(
-              top: 15.rh,
-              left: 158.rw,
-              child: InkWell(
-                onTap: () {
-                  // Flexify.go(const WelcomeScreen());
-                },
-                child: CircleAvatar(
-                  backgroundColor: ConstantColor.purpleColor,
-                  radius: 30.rs,
-                  child: SvgPicture.asset(
-                    "assets/svg/search.svg",
-                  ),
+              bottom: -10.rh,
+              child: Transform.scale(
+                scale: 1.1,
+                child: SvgPicture.asset(
+                  "assets/svg/navbar.svg",
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            BottomAppBar(
-              elevation: 0,
-              height: 70,
-              color: Colors.transparent,
+            Align(
+              alignment: Alignment.topCenter,
               child: TabBar(
+                padding: EdgeInsets.only(right: 4.rw, top: 6.rh),
                 overlayColor:
                     const MaterialStatePropertyAll(Colors.transparent),
                 controller: _tabController,
@@ -101,22 +90,50 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                   });
                 },
                 tabs: [
-                  TabWidget(
-                    text: "home",
-                    isActive: activeIndex == 0,
+                  Padding(
+                    padding: EdgeInsets.only(top: 50.rh),
+                    child: TabWidget(
+                      text: "home",
+                      isActive: activeIndex == 0,
+                    ),
                   ),
-                  TabWidget(
-                    text: "favorite",
-                    isActive: activeIndex == 1,
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.rw, top: 50.rh),
+                    child: Transform.scale(
+                      scale: 1.1,
+                      child: TabWidget(
+                        text: "favorite",
+                        isActive: activeIndex == 1,
+                      ),
+                    ),
                   ),
-                  0.verticalSpace,
-                  TabWidget(
-                    text: "notification",
-                    isActive: activeIndex == 3,
+                  Transform.scale(
+                    scale: 1.3,
+                    child: CircleAvatar(
+                      backgroundColor: ConstantColor.purpleColor,
+                      radius: 30.rs,
+                      child: SvgPicture.asset(
+                        width: 17.rw,
+                        "assets/svg/search.svg",
+                      ),
+                    ),
                   ),
-                  TabWidget(
-                    text: "save",
-                    isActive: activeIndex == 4,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.rw, top: 50.rh),
+                    child: Transform.scale(
+                      scale: 1.1,
+                      child: TabWidget(
+                        text: "notification",
+                        isActive: activeIndex == 3,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 50.rh),
+                    child: TabWidget(
+                      text: "save",
+                      isActive: activeIndex == 4,
+                    ),
                   ),
                 ],
               ),

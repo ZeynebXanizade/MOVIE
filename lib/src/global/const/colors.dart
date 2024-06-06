@@ -11,4 +11,5 @@ class ConstantColor {
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color containerColor = Color(0xFF252836);
   static const Color orangeColor = Color(0xFFFF8700);
+ 
 }

@@ -213,8 +213,8 @@ class _RegisterState extends ConsumerState<Register> {
                     ),
                   ),
                   20.verticalSpace,
-                  ElevatedButton(
-                    onPressed: () async {
+                  InkWell(
+                    onTap: () async {
                       await register();
 
                       if (isRegister == true) {

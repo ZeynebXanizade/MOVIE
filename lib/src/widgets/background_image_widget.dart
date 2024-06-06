@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class BackGroundImageWidget extends StatelessWidget {
   final Widget child;
+  final ImageProvider<Object>? image;
   const BackGroundImageWidget({
     super.key,
-    required this.child,
+    required this.child, this.image,
   });
 
   @override
@@ -13,10 +14,10 @@ class BackGroundImageWidget extends StatelessWidget {
     return Container(
         height: 812.rh,
         width: 375.rw,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(
+          image:image?? AssetImage(
             'assets/images/Sky.png',
           ),
         )),

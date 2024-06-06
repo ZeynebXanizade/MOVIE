@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_dovie/src/presentation/providers/api_providers.dart';
 import 'package:movie_dovie/src/widgets/card_widget.dart';
 
+import '../../detail_screen/detail_screen.dart';
+
 class AllMoviesWidget extends ConsumerWidget {
   const AllMoviesWidget({super.key});
 
@@ -30,11 +32,22 @@ class AllMoviesWidget extends ConsumerWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(right: 20.rw, top: 10.rh),
-                  child: ContainerWidget(
-                    data: data,
-                    index: index,
-                    width: 111.25.rw,
-                    height: 191.52.rh,
+                  child: InkWell(
+                    onTap: () {
+                      Flexify.go(
+                          DetailScreen(
+                            index: index,
+                            data: data,
+                          ),
+                          animation: FlexifyRouteAnimations.slideFromBottom,
+                          animationDuration: const Duration(milliseconds: 400));
+                    },
+                    child: ContainerWidget(
+                      data: data,
+                      index: index,
+                      width: 111.25.rw,
+                      height: 191.52.rh,
+                    ),
                   ),
                 );
               },

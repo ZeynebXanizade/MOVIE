@@ -5,10 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_dovie/servises_auth.dart';
 import 'package:movie_dovie/src/screens/tabbar_screen/bottom_navbar_screen.dart';
 
-import '../../profile_screen.dart/user_account_configuration.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/custom_text_field.dart';
-import '../home_screen/home_screen.dart';
+
 import '../register_screen/register.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -18,6 +17,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  ThemeMode _themeMode = ThemeMode.system;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
@@ -51,6 +51,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         errorMessage = e.message!;
         isLogin = false;
       });
+      setState(() {
+        ThemeMode.system;
+      });
     }
   }
 
@@ -65,6 +68,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {
+      //           setState(() {
+      //             if (_themeMode == ThemeMode.light) {
+      //               _themeMode == ThemeMode.dark;
+      //               ;
+      //             } else if (_themeMode == ThemeMode.dark) {
+      //               _themeMode == ThemeMode.light;
+      //             } else {
+      //               _themeMode == ThemeMode.light;
+      //             }
+      //           });
+      //         },
+      //         icon: Icon(Icons.brightness_6))
+      //   ],
+      // ),
       // key: _formKey,
       body: BackGroundImageWidget(
           child: Padding(
@@ -74,7 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Login to your  account',
@@ -166,8 +187,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 20.verticalSpace,
-                ElevatedButton(
-                  onPressed: () async {
+                InkWell(
+                  onTap: () async {
                     await signIn();
                     if (_formKey.currentState!.validate() &&
                         errorMessage == null) {
@@ -203,7 +224,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 16.verticalSpace,
                 Padding(
-                  padding: EdgeInsets.only(left: 90.rw),
+                  padding: EdgeInsets.only(left: 120.rw),
                   child: InkWell(
                     onTap: () {
                       Flexify.go(Register());
@@ -217,12 +238,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 50.rh,
-                  width: 200.rw,
-                  child:
-                      errorMessage != null ? Text(errorMessage!) : Container(),
-                ),
+                // Container(
+                //   height: 50.rh,
+                //   width: 200.rw,
+                //   child:
+                //       errorMessage != null ? Text(errorMessage!) : Container(),
+                // ),
               ],
             ),
           ),

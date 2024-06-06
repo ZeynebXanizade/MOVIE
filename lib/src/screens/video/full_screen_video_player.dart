@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../domains/models/previews_model.dart';
@@ -49,10 +50,9 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: const Text("Full Screen Video"),
+            backgroundColor: Colors.black,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 SystemChrome.setPreferredOrientations([
                   DeviceOrientation.portraitUp,
@@ -62,21 +62,28 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
               },
             ),
           ),
-          body: YoutubePlayerBuilder(
-            player: YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-              onEnded: (metaData) {
-                SystemChrome.setPreferredOrientations([
-                  DeviceOrientation.portraitUp,
-                  DeviceOrientation.portraitDown
-                ]);
-                Navigator.pop(context);
+          body: Center(
+            child: YoutubePlayerBuilder(
+              player: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                onEnded: (metaData) {
+                  SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.portraitUp,
+                    DeviceOrientation.portraitDown
+                  ]);
+                  Navigator.pop(context);
+                },
+              ),
+              builder: (context, player) {
+                return Center(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: player,
+                  ),
+                );
               },
             ),
-            builder: (context, player) {
-              return Center(child: player);
-            },
           ),
         ),
       ),
@@ -90,18 +97,29 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-              aspectRatio: 16 / 9,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.fullscreen, color: Colors.white),
+              onPressed: _enterFullScreen,
             ),
           ],
         ),
-      ),
-    );
+        body: BackGroundImageWidget(
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+            ),
+          ),
+        ));
   }
 }
