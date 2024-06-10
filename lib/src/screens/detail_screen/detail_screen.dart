@@ -40,7 +40,9 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   Widget build(BuildContext context) {
     final myData = widget.data[widget.index];
     final favoriteMoviesNotifier = ref.watch(favoriteMoviesProvider.notifier);
-    final isFavorite = ref.watch(favoriteMoviesProvider).contains(myData.id);
+    final isFavorite = ref
+        .watch(favoriteMoviesProvider)
+        .any((movie) => movie['id'] == myData.id.toString());
 
     return Scaffold(
         body: Stack(children: [
@@ -77,7 +79,8 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                                 : ConstantColor.whiteColor,
                           ),
                           onTap: () {
-                            favoriteMoviesNotifier.toggleFavorite(myData.id!);
+                            favoriteMoviesNotifier.toggleFavorite(
+                                myData.id!, myData.title!, myData.posterPath!);
                           },
                         ),
                       ],
@@ -175,9 +178,6 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                 ),
               );
             },
-            child: const Icon(
-              Icons.play_arrow,
-              color: ConstantColor.whiteColor,
-            )));
+            child: const Icon(Icons.play_arrow)));
   }
 }

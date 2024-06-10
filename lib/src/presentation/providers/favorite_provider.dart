@@ -1,16 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/favorite_services.dart';
 
 final favoritesServiceProvider = Provider<FavoritesService>((ref) {
   return FavoritesService();
 });
 
-final favoriteMoviesProvider = StateNotifierProvider<FavoriteMoviesNotifier, List<int>>((ref) {
+final favoriteMoviesProvider = StateNotifierProvider<FavoriteMoviesNotifier, List<Map<String, String>>>((ref) {
   return FavoriteMoviesNotifier(ref.read(favoritesServiceProvider));
 });
 
-class FavoriteMoviesNotifier extends StateNotifier<List<int>> {
+class FavoriteMoviesNotifier extends StateNotifier<List<Map<String, String>>> {
   final FavoritesService _favoritesService;
 
   FavoriteMoviesNotifier(this._favoritesService) : super([]) {
@@ -21,8 +20,8 @@ class FavoriteMoviesNotifier extends StateNotifier<List<int>> {
     state = await _favoritesService.getFavoriteMovies();
   }
 
-  void toggleFavorite(int movieId) async {
-    await _favoritesService.toggleFavorite(movieId);
+  void toggleFavorite(int movieId, String title, String posterPath) async {
+    await _favoritesService.toggleFavorite(movieId, title, posterPath);
     state = await _favoritesService.getFavoriteMovies();
   }
 

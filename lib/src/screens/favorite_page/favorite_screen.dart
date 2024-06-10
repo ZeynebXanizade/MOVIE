@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import '../../global/const/colors.dart';
 import '../../presentation/providers/favorite_provider.dart';
 
@@ -12,8 +11,8 @@ class FavoriteScreen extends ConsumerWidget {
     final favoriteMovies = ref.watch(favoriteMoviesProvider);
     final favoriteMoviesNotifier = ref.watch(favoriteMoviesProvider.notifier);
 
-    return BackGroundImageWidget(
-      child: Column(children: [
+    return Scaffold(
+      body: Column(children: [
         IconButton(
           icon: Icon(
             Icons.delete_forever,
@@ -31,13 +30,14 @@ class FavoriteScreen extends ConsumerWidget {
                 shrinkWrap: true,
                 itemCount: favoriteMovies.length,
                 itemBuilder: (context, index) {
-                  final movieId = favoriteMovies[index];
+                  final movie = favoriteMovies[index];
                   return ListTile(
-                    title: Text('Movie ID: ${movieId}'),
+                    leading: Image.network("https://image.tmdb.org/t/p/w500${movie['posterPath']}"),
+                    title: Text(movie['title'] ?? 'Unknown'),
                     trailing: IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
-                        favoriteMoviesNotifier.removeFavorite(movieId);
+                        favoriteMoviesNotifier.removeFavorite(int.parse(movie['id']!));
                       },
                     ),
                   );

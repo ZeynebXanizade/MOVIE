@@ -3,33 +3,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FavoritesService {
   static const String _favoritesKey = 'favorites';
 
-  Future<void> toggleFavorite(int movieId) async {
+  Future<void> toggleFavorite(int movieId, String title, String posterPath) async {
     final prefs = await SharedPreferences.getInstance();
     final favoriteMovies = prefs.getStringList(_favoritesKey) ?? [];
-    if (favoriteMovies.contains(movieId.toString())) {
-      favoriteMovies.remove(movieId.toString());
+    final movieData = '$movieId,$title,$posterPath';
+    
+    if (favoriteMovies.any((movie) => movie.startsWith(movieId.toString()))) {
+      favoriteMovies.removeWhere((movie) => movie.startsWith(movieId.toString()));
     } else {
-      favoriteMovies.add(movieId.toString());
+      favoriteMovies.add(movieData);
     }
+    
     await prefs.setStringList(_favoritesKey, favoriteMovies);
   }
 
-  Future<List<int>> getFavoriteMovies() async {
+  Future<List<Map<String, String>>> getFavoriteMovies() async {
     final prefs = await SharedPreferences.getInstance();
     final favoriteMovies = prefs.getStringList(_favoritesKey) ?? [];
-    return favoriteMovies.map((id) => int.parse(id)).toList();
+    
+    return favoriteMovies.map((movie) {
+      final parts = movie.split(',');
+      return {
+        'id': parts[0],
+        'title': parts[1],
+        'posterPath': parts[2],
+      };
+    }).toList();
   }
 
   Future<bool> isFavorite(int movieId) async {
     final prefs = await SharedPreferences.getInstance();
     final favoriteMovies = prefs.getStringList(_favoritesKey) ?? [];
-    return favoriteMovies.contains(movieId.toString());
+    return favoriteMovies.any((movie) => movie.startsWith(movieId.toString()));
   }
 
   Future<void> removeFavorite(int movieId) async {
     final prefs = await SharedPreferences.getInstance();
     final favoriteMovies = prefs.getStringList(_favoritesKey) ?? [];
-    favoriteMovies.remove(movieId.toString());
+    favoriteMovies.removeWhere((movie) => movie.startsWith(movieId.toString()));
     await prefs.setStringList(_favoritesKey, favoriteMovies);
   }
 
