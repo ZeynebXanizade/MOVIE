@@ -5,8 +5,6 @@ import 'package:movie_dovie/src/global/const/colors.dart';
 import 'package:movie_dovie/src/global/const/image.dart';
 import 'package:movie_dovie/src/global/const/texts.dart';
 import 'package:movie_dovie/src/screens/login_screen.dart/login_screen.dart';
-import 'package:movie_dovie/src/screens/register_screen/register.dart';
-
 import '../../../domains/models/onboarding_model.dart';
 import '../../../screens/on_boarding_screen/widgets/onboarding_view.dart';
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_dovie/src/screens/detail_screen/detail_screen.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
-import 'package:movie_dovie/src/widgets/card_widget.dart';
 import '../../global/const/colors.dart';
 import '../../presentation/providers/favorite_provider.dart';
 
@@ -17,17 +16,18 @@ class FavoriteScreen extends ConsumerWidget {
 
     return BackGroundImageWidget(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          onPressed: () {
+            favoriteMoviesNotifier.clearFavorites();
+          },
+          child: Icon(
+            Icons.delete_forever,
+            color: ConstantColor.whiteColor,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Column(children: [
-          IconButton(
-            icon: Icon(
-              Icons.delete_forever,
-              color: ConstantColor.whiteColor,
-            ),
-            onPressed: () {
-              favoriteMoviesNotifier.clearFavorites();
-            },
-          ),
           favoriteMovies.isEmpty
               ? Center(
                   child: Text('No favorites yet'),
