@@ -40,9 +40,8 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   Widget build(BuildContext context) {
     final myData = widget.data[widget.index];
     final favoriteMoviesNotifier = ref.watch(favoriteMoviesProvider.notifier);
-    final isFavorite = ref
-        .watch(favoriteMoviesProvider)
-        .any((movie) => movie['id'] == myData.id.toString());
+    final isFavorite =
+        ref.watch(favoriteMoviesProvider).any((movie) => movie.id == myData.id);
 
     return Scaffold(
         body: Stack(children: [
@@ -57,8 +56,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
             child: Container(
               color: Colors.black.withOpacity(0.7),
               child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 20.rw, vertical: 30.rh),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 child: Column(
                   children: [
                     Row(
@@ -86,7 +84,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 182.rh,
+                      height: 182,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -98,11 +96,11 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: 54.rw,
-                              height: 24.rh,
+                              width: 54,
+                              height: 24,
                               decoration: BoxDecoration(
                                   color: ConstantColor.containerColor,
-                                  borderRadius: BorderRadius.circular(8.rs)),
+                                  borderRadius: BorderRadius.circular(8)),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -117,19 +115,19 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                                       textStyle: TextStyle(
                                           color: ConstantColor.orangeColor,
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 12.rt),
+                                          fontSize: 12),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(
-                              height: 20.rh,
+                              height: 20,
                             ),
                             SizedBox(
-                              width: 184.rw,
+                              width: 184,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
+                                padding: EdgeInsets.symmetric(horizontal: 6),
                                 child: Text(
                                   "${myData.title}",
                                   maxLines: 4,
@@ -139,7 +137,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                                     textStyle: TextStyle(
                                         color: ConstantColor.whiteColor,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 18.rt),
+                                        fontSize: 18),
                                   ),
                                 ),
                               ),
@@ -149,7 +147,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 30.rh,
+                      height: 30,
                     ),
                     Expanded(
                         child: DetailTabbarWidget(widget.data, widget.index)),
@@ -172,12 +170,16 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       title: myData.title,
                       posterPath: myData.posterPath,
                       overview: myData.overview,
-                      releaseDate: myData.releaseDate,
+                      voteaverage: myData.voteaverage,
                     ),
                   ),
                 ),
               );
             },
-            child: const Icon(Icons.play_arrow)));
+            child: Icon(
+              Icons.play_arrow,
+              color: ConstantColor.buttonColorsTwo,
+              size: 32,
+            )));
   }
 }

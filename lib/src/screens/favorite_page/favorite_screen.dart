@@ -1,6 +1,9 @@
+import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_dovie/src/screens/detail_screen/detail_screen.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
+import 'package:movie_dovie/src/widgets/card_widget.dart';
 import '../../global/const/colors.dart';
 import '../../presentation/providers/favorite_provider.dart';
 
@@ -35,14 +38,32 @@ class FavoriteScreen extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final movie = favoriteMovies[index];
                     return ListTile(
-                      leading: Image.network(
-                          "https://image.tmdb.org/t/p/w500${movie['posterPath']}"),
-                      title: Text(movie['title'] ?? 'Unknown'),
+                      onTap: () {
+                        Flexify.go(
+                            DetailScreen(data: favoriteMovies, index: index));
+                      },
+                      leading: Container(
+                        width: 100,
+                        height: 145.92,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                            ),
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        movie.title ?? 'Unknown',
+                        style: TextStyle(color: ConstantColor.whiteColor),
+                      ),
                       trailing: IconButton(
-                        icon: Icon(Icons.delete),
+                        icon:
+                            Icon(Icons.delete, color: ConstantColor.whiteColor),
                         onPressed: () {
-                          favoriteMoviesNotifier
-                              .removeFavorite(int.parse(movie['id']!));
+                          favoriteMoviesNotifier.removeFavorite(movie.id!);
                         },
                       ),
                     );

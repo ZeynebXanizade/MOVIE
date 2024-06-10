@@ -1,37 +1,36 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/favorite_services.dart';
+import '../../domains/models/previews_model.dart';
 
-final favoritesServiceProvider = Provider<FavoritesService>((ref) {
-  return FavoritesService();
+final favoriteMoviesProvider =
+    StateNotifierProvider<FavoriteMoviesNotifier, List<Results>>((ref) {
+  return FavoriteMoviesNotifier();
 });
 
-final favoriteMoviesProvider = StateNotifierProvider<FavoriteMoviesNotifier, List<Map<String, String>>>((ref) {
-  return FavoriteMoviesNotifier(ref.read(favoritesServiceProvider));
-});
+class FavoriteMoviesNotifier extends StateNotifier<List<Results>> {
+  FavoriteMoviesNotifier() : super([]);
 
-class FavoriteMoviesNotifier extends StateNotifier<List<Map<String, String>>> {
-  final FavoritesService _favoritesService;
-
-  FavoriteMoviesNotifier(this._favoritesService) : super([]) {
-    _loadFavorites();
+  void addFavorite(Results movie) {
+    state = [...state, movie];
   }
 
-  void _loadFavorites() async {
-    state = await _favoritesService.getFavoriteMovies();
+  void removeFavorite(int id) {
+    state = state.where((movie) => movie.id != id).toList();
   }
 
-  void toggleFavorite(int movieId, String title, String posterPath) async {
-    await _favoritesService.toggleFavorite(movieId, title, posterPath);
-    state = await _favoritesService.getFavoriteMovies();
+  void toggleFavorite(int id, String title, String posterPath) {
+    final Results existingMovie = state.firstWhere(
+      (movie) => movie.id == id,
+      orElse: () => Results(
+          id: -1, title: '', posterPath: ''), 
+    );
+    if (existingMovie.id == -1) {
+      addFavorite(Results(id: id, title: title, posterPath: posterPath));
+    } else {
+      removeFavorite(id);
+    }
   }
 
-  void removeFavorite(int movieId) async {
-    await _favoritesService.removeFavorite(movieId);
-    state = await _favoritesService.getFavoriteMovies();
-  }
-
-  void clearFavorites() async {
-    await _favoritesService.clearFavorites();
+  void clearFavorites() {
     state = [];
   }
 }
