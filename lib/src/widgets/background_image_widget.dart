@@ -6,7 +6,8 @@ class BackGroundImageWidget extends StatelessWidget {
   final ImageProvider<Object>? image;
   const BackGroundImageWidget({
     super.key,
-    required this.child, this.image,
+    required this.child,
+    this.image,
   });
 
   @override
@@ -17,9 +18,10 @@ class BackGroundImageWidget extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image:image?? AssetImage(
-            'assets/images/Sky.png',
-          ),
+          image: image ??
+              AssetImage(
+                'assets/images/Sky.png',
+              ),
         )),
         child: child);
   }

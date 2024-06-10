@@ -28,7 +28,7 @@ class MovieDovie extends StatelessWidget {
       designWidth: 375,
       app: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnBoardingScreen(),
+        home: BottomNavbarScreen(),
         theme: ThemeData.light().copyWith(
             bottomSheetTheme:
                 BottomSheetThemeData(backgroundColor: Colors.transparent)),
