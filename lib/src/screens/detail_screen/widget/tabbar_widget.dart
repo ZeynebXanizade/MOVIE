@@ -1,13 +1,10 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../domains/models/previews_model.dart';
 import '../../../global/const/colors.dart';
-import '../../../presentation/providers/api_providers.dart';
 import '../../../presentation/providers/tab_notifier.dart';
 import '../../../widgets/text_widgets_poppins.dart';
-import '../../home_screen/widgets/gridview_widgets.dart';
 
 class DetailTabbarWidget extends ConsumerStatefulWidget {
   final List<Results> data;
@@ -38,8 +35,11 @@ class _DetailTabbarWidgetState extends ConsumerState<DetailTabbarWidget>
   Widget build(BuildContext context) {
     final tabIndex = ref.watch(tabProvider);
     final myData = widget.data[widget.index];
+
+    int initialIndex = (tabIndex >= 0 && tabIndex < 2) ? tabIndex : 0;
+
     return DefaultTabController(
-        initialIndex: tabIndex,
+        initialIndex: initialIndex,
         length: 2,
         child: Column(
           children: [

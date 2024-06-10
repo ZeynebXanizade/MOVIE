@@ -2,8 +2,7 @@ import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_dovie/src/global/const/colors.dart';
-
-import '../../data/popular_service.dart';
+import '../../data/data_service.dart';
 import '../../domains/models/previews_model.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/card_widget.dart';

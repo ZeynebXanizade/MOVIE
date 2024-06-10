@@ -1,8 +1,7 @@
 import 'package:flexify/flexify.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:movie_dovie/src/global/const/colors.dart';
+import 'package:movie_dovie/src/screens/favorite_page/favorite_screen.dart';
 import 'package:movie_dovie/src/screens/home_screen/home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_dovie/src/screens/search_screen/search_screen.dart';
@@ -46,7 +45,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                 controller: _tabController,
                 children: [
                   const HomeScreen(),
-                  const HomeScreen(),
+                  FavoriteScreen(),
                   SearchScreen(),
                   const HomeScreen(),
                   const HomeScreen(),
@@ -110,7 +109,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                   Transform.scale(
                     scale: 1.3,
                     child: CircleAvatar(
-                      backgroundColor: ConstantColor.purpleColor,
+                      backgroundColor: ConstantColor.buttonColorsOne,
                       radius: 30.rs,
                       child: SvgPicture.asset(
                         width: 17.rw,
@@ -131,7 +130,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                   Padding(
                     padding: EdgeInsets.only(top: 50.rh),
                     child: TabWidget(
-                      text: "save",
+                      text: "profile",
                       isActive: activeIndex == 4,
                     ),
                   ),

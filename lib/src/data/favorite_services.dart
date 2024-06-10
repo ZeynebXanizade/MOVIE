@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoritesService {
@@ -26,18 +25,16 @@ class FavoritesService {
     final favoriteMovies = prefs.getStringList(_favoritesKey) ?? [];
     return favoriteMovies.contains(movieId.toString());
   }
+
+  Future<void> removeFavorite(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteMovies = prefs.getStringList(_favoritesKey) ?? [];
+    favoriteMovies.remove(movieId.toString());
+    await prefs.setStringList(_favoritesKey, favoriteMovies);
+  }
+
+  Future<void> clearFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_favoritesKey);
+  }
 }
-
-final favoritesServiceProvider = Provider<FavoritesService>((ref) {
-  return FavoritesService();
-});
-
-final favoriteMoviesProvider = FutureProvider<List<int>>((ref) async {
-  final service = ref.read(favoritesServiceProvider);
-  return service.getFavoriteMovies();
-});
-
-final isFavoriteProvider = FutureProvider.family<bool, int>((ref, movieId) async {
-  final service = ref.read(favoritesServiceProvider);
-  return service.isFavorite(movieId);
-});

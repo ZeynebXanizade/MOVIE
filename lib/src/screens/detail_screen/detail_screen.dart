@@ -5,15 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_dovie/src/screens/detail_screen/widget/tabbar_widget.dart';
-import '../../data/favorite_services.dart';
 import '../../data/video_service.dart';
 import '../../domains/models/previews_model.dart';
 import '../../global/const/colors.dart';
+import '../../presentation/providers/favorite_provider.dart';
 import '../../widgets/back_save_buttons_widgets.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/card_widget.dart';
 import '../../widgets/logo_widget.dart';
-import '../video/full_screen_video_player.dart';
+import '../video_screen/full_screen_video_player.dart';
 
 class DetailScreen extends ConsumerStatefulWidget {
   final List<Results> data;
@@ -39,7 +39,8 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     final myData = widget.data[widget.index];
-    final isFavorite = ref.watch(isFavoriteProvider(myData.id!));
+    final favoriteMoviesNotifier = ref.watch(favoriteMoviesProvider.notifier);
+    final isFavorite = ref.watch(favoriteMoviesProvider).contains(myData.id);
 
     return Scaffold(
         body: Stack(children: [
@@ -71,20 +72,12 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                         BackAndSaveButtonWidgets(
                           child: Icon(
                             Icons.favorite,
-                            color: isFavorite.when(
-                              data: (isFav) => isFav
-                                  ? ConstantColor.purpleColor
-                                  : ConstantColor.whiteColor,
-                              loading: () => ConstantColor.whiteColor,
-                              error: (_, __) => ConstantColor.whiteColor,
-                            ),
+                            color: isFavorite
+                                ? ConstantColor.buttonColorsTwo
+                                : ConstantColor.whiteColor,
                           ),
-                          onTap: () async {
-                            await ref
-                                .read(favoritesServiceProvider)
-                                .toggleFavorite(myData.id!);
-                            ref.refresh(isFavoriteProvider(myData.id!));
-                            ref.refresh(favoriteMoviesProvider);
+                          onTap: () {
+                            favoriteMoviesNotifier.toggleFavorite(myData.id!);
                           },
                         ),
                       ],
@@ -164,7 +157,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
           ),
         ]),
         floatingActionButton: FloatingActionButton(
-            backgroundColor: ConstantColor.purpleColor,
+            backgroundColor: ConstantColor.buttonColorsOne,
             onPressed: () async {
               final String videoId = (await fetchVideoData(myData.id!))!;
               Navigator.of(context).push(

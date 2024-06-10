@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/src/data/popular_service.dart';
+import 'package:movie_dovie/src/data/data_service.dart';
 
 final apiProviderOfDay =
     FutureProvider((ref) => ApiService().fetchDataPopular(index: 1));
