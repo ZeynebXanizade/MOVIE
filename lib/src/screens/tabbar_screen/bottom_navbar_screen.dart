@@ -4,6 +4,7 @@ import 'package:movie_dovie/src/global/const/colors.dart';
 import 'package:movie_dovie/src/screens/favorite_page/favorite_screen.dart';
 import 'package:movie_dovie/src/screens/home_screen/home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movie_dovie/src/screens/profile_screen.dart/user_account_configuration.dart';
 import 'package:movie_dovie/src/screens/search_screen/search_screen.dart';
 import 'widget/tab_widget.dart';
 
@@ -48,7 +49,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                   FavoriteScreen(),
                   SearchScreen(),
                   const HomeScreen(),
-                  const HomeScreen(),
+                  const UserAccountConfiguration(),
                 ],
               ),
             ),
