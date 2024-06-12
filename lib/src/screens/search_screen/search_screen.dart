@@ -47,18 +47,21 @@ class _SearchScreenState extends State<SearchScreen> {
               const Center(
                 child: LogoWidget(),
               ),
-              CustomTextField(
-                text: "Search",
-                controller: _controller,
-                textInputAction: TextInputAction.search,
-                onSubmitted: (value) => _searchMovies(),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter Something';
-                  }
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomTextField(
+                  text: "Search",
+                  controller: _controller,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (value) => _searchMovies(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter Something';
+                    }
 
-                  return null;
-                },
+                    return null;
+                  },
+                ),
               ),
               _isLoading
                   ? CircularProgressIndicator()

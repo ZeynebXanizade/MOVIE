@@ -6,6 +6,7 @@ import '../domains/models/previews_model.dart';
 class ApiService {
   final Dio _dio = Dio();
 
+  // ignore: body_might_complete_normally_nullable
   Future<PreviewsModel?> fetchDataPopular({required int index}) async {
     try {
       Response response = await _dio.get(
@@ -16,6 +17,7 @@ class ApiService {
     }
   }
 
+  // ignore: body_might_complete_normally_nullable
   Future<PreviewsModel?> searchMovies({required String query}) async {
     try {
       Response response = await _dio.get(

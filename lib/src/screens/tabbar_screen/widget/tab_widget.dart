@@ -19,6 +19,7 @@ class TabWidget extends StatelessWidget {
         "assets/svg/$text.svg",
         width: (text == "notification" || text == "profile") ? 28.rs : 24.rs,
         height: (text == "notification" || text == "profile") ? 28.rs : 24.rs,
+        // ignore: deprecated_member_use
         color:
             isActive ? ConstantColor.buttonColorsOne : ConstantColor.greyColor,
       ),

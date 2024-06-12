@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domains/models/previews_model.dart';
 import '../../../global/const/colors.dart';
-import '../../../presentation/providers/tab_notifier.dart';
+import '../../../presentation/riverpod/tab_notifier.dart';
 import '../../../widgets/text_widgets_poppins.dart';
 
 class DetailTabbarWidget extends ConsumerStatefulWidget {

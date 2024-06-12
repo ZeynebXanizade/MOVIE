@@ -23,6 +23,7 @@ class _RegisterState extends ConsumerState<Register> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
+  // ignore: unused_field
   late String _error;
   final _formKey1 = GlobalKey<FormState>();
   bool? isRegister;

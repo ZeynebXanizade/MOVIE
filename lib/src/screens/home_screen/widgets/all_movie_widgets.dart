@@ -1,7 +1,7 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/src/presentation/providers/api_providers.dart';
+import 'package:movie_dovie/src/presentation/riverpod/api_providers.dart';
 import 'package:movie_dovie/src/widgets/card_widget.dart';
 
 import '../../detail_screen/detail_screen.dart';

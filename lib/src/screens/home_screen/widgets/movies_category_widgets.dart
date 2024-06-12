@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flexify/flexify.dart';
 import 'package:movie_dovie/src/screens/home_screen/widgets/gridview_widgets.dart';
 import '../../../global/const/colors.dart';
-import '../../../presentation/providers/api_providers.dart';
-import '../../../presentation/providers/tab_notifier.dart';
+import '../../../presentation/riverpod/api_providers.dart';
+import '../../../presentation/riverpod/tab_notifier.dart';
 import '../../../widgets/text_widgets_poppins.dart';
 
 class MoviesCategoryWidgets extends ConsumerStatefulWidget {

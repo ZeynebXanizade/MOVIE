@@ -17,6 +17,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  // ignore: unused_field
   ThemeMode _themeMode = ThemeMode.system;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;

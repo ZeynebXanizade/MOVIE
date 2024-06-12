@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_dovie/src/screens/detail_screen/detail_screen.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import '../../global/const/colors.dart';
-import '../../presentation/providers/favorite_provider.dart';
+import '../../presentation/riverpod/favorite_provider.dart';
 
 class FavoriteScreen extends ConsumerWidget {
   const FavoriteScreen({super.key});
@@ -27,49 +27,58 @@ class FavoriteScreen extends ConsumerWidget {
           ),
         ),
         backgroundColor: Colors.transparent,
-        body: Column(children: [
-          favoriteMovies.isEmpty
-              ? Center(
-                  child: Text('No favorites yet'),
-                )
-              : ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: favoriteMovies.length,
-                  itemBuilder: (context, index) {
-                    final movie = favoriteMovies[index];
-                    return ListTile(
-                      onTap: () {
-                        Flexify.go(
-                            DetailScreen(data: favoriteMovies, index: index));
-                      },
-                      leading: Container(
-                        width: 100,
-                        height: 145.92,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.rh),
+            child: Column(children: [
+              favoriteMovies.isEmpty
+                  ? Center(
+                      child: Text('No favorites yet'),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: favoriteMovies.length,
+                      itemBuilder: (context, index) {
+                        final movie = favoriteMovies[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            onTap: () {
+                              Flexify.go(DetailScreen(
+                                  data: favoriteMovies, index: index));
+                            },
+                            leading: Container(
+                              width: 100,
+                              height: 145.92,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                                  ),
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              movie.title ?? 'Unknown',
+                              style: TextStyle(color: ConstantColor.whiteColor),
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete,
+                                  color: ConstantColor.whiteColor),
+                              onPressed: () {
+                                favoriteMoviesNotifier
+                                    .removeFavorite(movie.id!);
+                              },
                             ),
                           ),
-                        ),
-                      ),
-                      title: Text(
-                        movie.title ?? 'Unknown',
-                        style: TextStyle(color: ConstantColor.whiteColor),
-                      ),
-                      trailing: IconButton(
-                        icon:
-                            Icon(Icons.delete, color: ConstantColor.whiteColor),
-                        onPressed: () {
-                          favoriteMoviesNotifier.removeFavorite(movie.id!);
-                        },
-                      ),
-                    );
-                  },
-                ),
-        ]),
+                        );
+                      },
+                    ),
+            ]),
+          ),
+        ),
       ),
     );
   }

@@ -8,7 +8,7 @@ import 'package:movie_dovie/src/screens/detail_screen/widget/tabbar_widget.dart'
 import '../../data/video_service.dart';
 import '../../domains/models/previews_model.dart';
 import '../../global/const/colors.dart';
-import '../../presentation/providers/favorite_provider.dart';
+import '../../presentation/riverpod/favorite_provider.dart';
 import '../../widgets/back_save_buttons_widgets.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/card_widget.dart';
