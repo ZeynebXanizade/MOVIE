@@ -48,7 +48,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                   const HomeScreen(),
                   FavoriteScreen(),
                   SearchScreen(),
-                  UserProfile(),
+                  HomeScreen(),
                   UserProfile()
                 ],
               ),
