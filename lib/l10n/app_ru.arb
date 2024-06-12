@@ -1,8 +1,20 @@
-{
+  {
     "@@locale": "ru",
-    "hello": "Hello",
-    "@hello": {
-      "description": "The conventional newborn greeting"
-    }
+    "applanguage": "Язык приложения",
+    "theme": "Тема",
+    "services": "Услуги",
+    "logout": "Выйти",
+    "az": "Aзербайджанский",
+    "en": "Aнглийский",
+    "ru": "Pусский",
+    "movieday": "Фильм дня!!",
+    "nowplaying": "Сейчас играет",
+    "upcoming": "Предстоящие",
+    "toprated": "Самые популярные",
+    "popular": "Популярный",
+    "description": "Описание",
+    "details": "Подробности",
+    "nofavoritesyet": "Пока нет избранных"
+    
   }
   

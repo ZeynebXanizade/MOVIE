@@ -2,6 +2,7 @@ import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_dovie/src/global/const/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_dovie/src/screens/home_screen/widgets/all_movie_widgets.dart';
 import 'package:movie_dovie/src/screens/home_screen/widgets/movies_category_widgets.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             height: 20.rh,
           ),
           Text(
-            'Movie of the day!!',
+            AppLocalizations.of(context)!.movieday.toString(),
             style: GoogleFonts.dmSans(
               textStyle: const TextStyle(
                   color: ConstantColor.whiteColor,

@@ -1,14 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:movie_dovie/src/presentation/providers/language_change_controller.dart';
 import 'package:movie_dovie/src/screens/login_screen.dart/login_screen.dart';
 import 'package:movie_dovie/src/screens/on_boarding_screen/onboarding_screen.dart';
 import 'package:movie_dovie/src/screens/tabbar_screen/bottom_navbar_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
 import 'firebase_options.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -16,54 +18,89 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // final prefs = await SharedPreferences.getInstance();
-  // final String languageCode = prefs.getString('language_code') ?? "";
+  final prefs = await SharedPreferences.getInstance();
+  final String languageCode = prefs.getString('language_code') ?? "";
   runApp(ProviderScope(
-      child: MovieDovie(
-          // locale: languageCode,
-          )));
+    child: MovieDovie(
+      locale: languageCode,
+    ),
+  ));
 }
 
 class MovieDovie extends StatelessWidget {
-  // final String locale;
+  final String locale;
   const MovieDovie({
     super.key,
-    // required this.locale,
+    required this.locale,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Flexify(
-      designHeight: 812,
-      designWidth: 375,
-      app: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: OnBoardingScreen(),
-        theme: ThemeData.light().copyWith(
-            bottomSheetTheme:
-                BottomSheetThemeData(backgroundColor: Colors.transparent)),
-        darkTheme: ThemeData.dark().copyWith(
-            bottomSheetTheme:
-                BottomSheetThemeData(backgroundColor: Colors.transparent)),
-        navigatorKey: Get.key,
-        onGenerateRoute: (settings) {
-          return GetPageRoute(
-            settings: settings,
-            page: () {
-              switch (settings.name) {
-                case '/login':
-                  return LoginScreen();
-                case '/onboarding':
-                  return OnBoardingScreen();
-                case '/bottomNavbar':
-                  return BottomNavbarScreen();
-                default:
-                  return OnBoardingScreen();
-              }
-            },
+    return provider.MultiProvider(
+        providers: [
+          provider.ChangeNotifierProvider<AppLanguage>(
+              create: (_) => AppLanguage()),
+        ],
+        child: provider.Consumer<AppLanguage>(
+            builder: (context, appLanguage, child) {
+          if (appLanguage.appLocal == null) {
+            appLanguage.fetchLocale();
+            if (locale.isEmpty) {
+              appLanguage.changeLanguage(const Locale('en'));
+            } else {
+              appLanguage.changeLanguage(Locale(locale));
+            }
+          }
+          return Flexify(
+            designHeight: 812,
+            designWidth: 375,
+            app: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: OnBoardingScreen(),
+              locale: locale == ''
+                  ? const Locale('en')
+                  : appLanguage.appLocal == null
+                      ? Locale(locale)
+                      : appLanguage.appLocal,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              supportedLocales: const [
+                Locale("az"),
+                Locale("en"),
+                Locale("ru"),
+              ],
+              theme: ThemeData.light().copyWith(
+                bottomSheetTheme: const BottomSheetThemeData(
+                    backgroundColor: Colors.transparent),
+              ),
+              darkTheme: ThemeData.dark().copyWith(
+                bottomSheetTheme: const BottomSheetThemeData(
+                    backgroundColor: Colors.transparent),
+              ),
+              navigatorKey: Get.key,
+              onGenerateRoute: (settings) {
+                return GetPageRoute(
+                  settings: settings,
+                  page: () {
+                    switch (settings.name) {
+                      case '/login':
+                        return LoginScreen();
+                      case '/onboarding':
+                        return OnBoardingScreen();
+                      case '/bottomNavbar':
+                        return BottomNavbarScreen();
+                      default:
+                        return OnBoardingScreen();
+                    }
+                  },
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
+        }));
   }
 }

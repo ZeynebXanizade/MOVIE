@@ -1,8 +1,19 @@
-{
+ {
     "@@locale": "az",
-    "hello": "Hello",
-    "@hello": {
-      "description": "The conventional newborn greeting"
-    }
-  }
+    "applanguage": "Tətbiq Dili",
+    "theme": "Tema",
+    "services": "Xidmətlər",
+    "logout": "Çıxış",
+    "az": "Azərbaycan dili",
+    "en": "İngilis dili",
+    "ru": "Rus dili",
+    "movieday": "Günün filmi!!",
+    "nowplaying": "İndi oynayır",
+    "upcoming": "Qarşıdan gələn",
+    "toprated": "Ən yüksək reytinq",
+    "popular": "Məşhur",
+    "description": "Təsvir",
+    "details": "Təfərrüatlar",
+    "nofavoritesyet": "Hələ favorit yoxdur"
+ }
   

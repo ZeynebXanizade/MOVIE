@@ -5,6 +5,7 @@ import '../../../domains/models/previews_model.dart';
 import '../../../global/const/colors.dart';
 import '../../../presentation/riverpod/tab_notifier.dart';
 import '../../../widgets/text_widgets_poppins.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailTabbarWidget extends ConsumerStatefulWidget {
   final List<Results> data;
@@ -62,8 +63,10 @@ class _DetailTabbarWidgetState extends ConsumerState<DetailTabbarWidget>
                       onPressed: () {
                         _tabController.animateTo(0);
                       },
-                      child: const TextWidgetPoppins(
-                        text: "Description",
+                      child: TextWidgetPoppins(
+                        text: AppLocalizations.of(context)!
+                            .description
+                            .toString(),
                       ),
                     )),
                     Tab(
@@ -71,8 +74,8 @@ class _DetailTabbarWidgetState extends ConsumerState<DetailTabbarWidget>
                       onPressed: () {
                         _tabController.animateTo(1);
                       },
-                      child: const TextWidgetPoppins(
-                        text: "Details",
+                      child: TextWidgetPoppins(
+                        text: AppLocalizations.of(context)!.details.toString(),
                       ),
                     )),
                   ]),

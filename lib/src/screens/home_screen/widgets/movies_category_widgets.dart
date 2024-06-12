@@ -6,6 +6,7 @@ import '../../../global/const/colors.dart';
 import '../../../presentation/riverpod/api_providers.dart';
 import '../../../presentation/riverpod/tab_notifier.dart';
 import '../../../widgets/text_widgets_poppins.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MoviesCategoryWidgets extends ConsumerStatefulWidget {
   const MoviesCategoryWidgets({super.key});
@@ -57,8 +58,9 @@ class _MoviesCategoryWidgetsState extends ConsumerState<MoviesCategoryWidgets>
                       onPressed: () {
                         _tabController.animateTo(0);
                       },
-                      child: const TextWidgetPoppins(
-                        text: "Now playing",
+                      child: TextWidgetPoppins(
+                        text:
+                            AppLocalizations.of(context)!.nowplaying.toString(),
                       ),
                     )),
                     Tab(
@@ -66,8 +68,8 @@ class _MoviesCategoryWidgetsState extends ConsumerState<MoviesCategoryWidgets>
                       onPressed: () {
                         _tabController.animateTo(1);
                       },
-                      child: const TextWidgetPoppins(
-                        text: "Upcoming",
+                      child: TextWidgetPoppins(
+                        text: AppLocalizations.of(context)!.upcoming.toString(),
                       ),
                     )),
                     Tab(
@@ -75,14 +77,18 @@ class _MoviesCategoryWidgetsState extends ConsumerState<MoviesCategoryWidgets>
                       onPressed: () {
                         _tabController.animateTo(2);
                       },
-                      child: const TextWidgetPoppins(text: "Top rated"),
+                      child: TextWidgetPoppins(
+                        text: AppLocalizations.of(context)!.toprated.toString(),
+                      ),
                     )),
                     Tab(
                         child: TextButton(
                       onPressed: () {
                         _tabController.animateTo(3);
                       },
-                      child: const TextWidgetPoppins(text: "Popular"),
+                      child: TextWidgetPoppins(
+                        text: AppLocalizations.of(context)!.popular.toString(),
+                      ),
                     )),
                   ]),
             ),

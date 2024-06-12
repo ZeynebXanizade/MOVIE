@@ -1,11 +1,13 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_dovie/src/screens/profile_screen.dart/widgets/language_widgets.dart';
 import 'package:movie_dovie/src/screens/profile_screen.dart/widgets/my_drawer.dart';
 import 'package:movie_dovie/src/screens/profile_screen.dart/widgets/my_list_tile.dart';
 import 'package:movie_dovie/src/screens/profile_screen.dart/widgets/user_account_configuration.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import '../../presentation/riverpod/user_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserProfile extends ConsumerWidget {
   @override
@@ -18,15 +20,6 @@ class UserProfile extends ConsumerWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            50.verticalSpace,
-            Text(
-              'P R O F I  L E',
-              style: TextStyle(
-                color: Color(0xFF0000000),
-                fontSize: 30.rt,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
             30.verticalSpace,
             Card(
               elevation: 20.rs,
@@ -70,26 +63,23 @@ class UserProfile extends ConsumerWidget {
                 ],
               ),
             ),
-            25.verticalSpace,
+            45.verticalSpace,
             myListTile(
                 ontap: () => Flexify.go,
                 icon: Icons.dark_mode,
-                text: 'T H E M E'),
+                text: AppLocalizations.of(context)!.theme.toString()),
             10.verticalSpace,
-            myListTile(
-                ontap: () => Flexify.go,
-                icon: Icons.language,
-                text: 'L A N G U A G E'),
+            AppLanguages(),
             10.verticalSpace,
             myListTile(
                 ontap: () => Flexify.go,
                 icon: Icons.miscellaneous_services_sharp,
-                text: 'S E R V I S E S'),
+                text: AppLocalizations.of(context)!.services.toString()),
             10.verticalSpace,
             myListTile(
                 ontap: () => Flexify.go,
                 icon: Icons.login_outlined,
-                text: "L O G O U T"),
+                text: AppLocalizations.of(context)!.logout.toString()),
           ],
         ),
       ),

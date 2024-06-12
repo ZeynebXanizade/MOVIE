@@ -14,7 +14,6 @@ import '../../widgets/background_image_widget.dart';
 import '../../widgets/card_widget.dart';
 import '../../widgets/logo_widget.dart';
 import '../video_screen/full_screen_video_player.dart';
-
 class DetailScreen extends ConsumerStatefulWidget {
   final List<Results> data;
   final int index;

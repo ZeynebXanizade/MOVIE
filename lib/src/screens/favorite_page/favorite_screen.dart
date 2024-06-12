@@ -5,6 +5,7 @@ import 'package:movie_dovie/src/screens/detail_screen/detail_screen.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import '../../global/const/colors.dart';
 import '../../presentation/riverpod/favorite_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavoriteScreen extends ConsumerWidget {
   const FavoriteScreen({super.key});
@@ -33,7 +34,15 @@ class FavoriteScreen extends ConsumerWidget {
             child: Column(children: [
               favoriteMovies.isEmpty
                   ? Center(
-                      child: Text('No favorites yet'),
+                      child: Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .nofavoritesyet
+                              .toString(),
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
                     )
                   : ListView.builder(
                       shrinkWrap: true,
