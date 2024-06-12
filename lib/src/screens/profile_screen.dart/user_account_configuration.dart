@@ -1,7 +1,10 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_dovie/src/screens/profile_screen.dart/my_drawer.dart';
+
+import 'package:movie_dovie/src/screens/profile_screen.dart/prov_class.dart';
+import 'package:movie_dovie/src/screens/profile_screen.dart/user_configure_class.dart';
+import 'package:movie_dovie/src/screens/profile_screen.dart/user_profile.dart';
 import '../../widgets/custom_text_field.dart';
 
 class UserAccountConfiguration extends ConsumerStatefulWidget {
@@ -14,13 +17,25 @@ class UserAccountConfiguration extends ConsumerStatefulWidget {
 
 class _UserAccountConfiguration
     extends ConsumerState<UserAccountConfiguration> {
+  final _formKey4 = GlobalKey<FormState>();
+  late String name;
+  late String surname;
+  late String age;
+  late String gender;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = ref.read(userProvider);
+    name = user.name;
+    surname = user.surname;
+    age = user.age;
+    gender = user.age;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: myDrawer(
-          // onProfileTap: goToProfilePage,
-          // onSignOut: signOut,
-          ),
       backgroundColor: Color(0xFFF9F9F9),
       appBar: AppBar(
         leading: Icon(
@@ -39,79 +54,120 @@ class _UserAccountConfiguration
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.rw),
-        child: Column(
-          children: [
-            42.verticalSpace,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 100.rw),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/userImage.png'),
-                  21.verticalSpace,
-                  Text(
-                    'user name example',
-                    style: TextStyle(
-                      color: Color(0xFF181D27),
-                      fontSize: 16.rt,
-                      fontWeight: FontWeight.w700,
-                    ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              42.verticalSpace,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 100.rw),
+                child: Form(
+                  key: _formKey4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/images/userImage.png'),
+                      21.verticalSpace,
+                      Text(
+                        'user name example',
+                        style: TextStyle(
+                          color: Color(0xFF181D27),
+                          fontSize: 16.rt,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      5.verticalSpace,
+                      Text(
+                        'user E-mail example',
+                        style: TextStyle(
+                          color: Color(0xFFABABAB),
+                          fontSize: 13.rt,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
                   ),
-                  5.verticalSpace,
-                  Text(
-                    'user E-mail example',
-                    style: TextStyle(
-                      color: Color(0xFFABABAB),
-                      fontSize: 13.rt,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            40.verticalSpace,
-            CustomTextField(
-              text: 'Enter your name',
-              textInputAction: TextInputAction.next,
-              validator: (value) => null,
-            ),
-            10.verticalSpace,
-            CustomTextField(
-              text: 'enter your surname',
-              textInputAction: TextInputAction.next,
-              validator: (value) => null,
-            ),
-            10.verticalSpace,
-            CustomTextField(
-              text: 'Enter your age',
-              textInputAction: TextInputAction.next,
-              validator: (value) => null,
-            ),
-            10.verticalSpace,
-            CustomTextField(
-              text: 'Enter your Gender',
-              textInputAction: TextInputAction.done,
-              validator: (value) => null,
-            ),
-            34.verticalSpace,
-            Container(
-              width: 259.82.rw,
-              height: 55.rh,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Color(0xFF0601B4),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                'Udpate Profile',
-                style: TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontSize: 14.rt,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
-            ),
-          ],
+              40.verticalSpace,
+              CustomTextField(
+                initValue: name,
+                onChanged: (value) {
+                  setState(() {
+                    name = value!;
+                  });
+                  return;
+                },
+                text: 'Enter your name',
+                textInputAction: TextInputAction.next,
+                validator: (value) => null,
+              ),
+              10.verticalSpace,
+              CustomTextField(
+                initValue: surname,
+                onChanged: (value) {
+                  setState(() {
+                    surname = value!;
+                  });
+                  return;
+                },
+                text: 'enter your surname',
+                textInputAction: TextInputAction.next,
+                validator: (value) => null,
+              ),
+              10.verticalSpace,
+              CustomTextField(
+                initValue: age,
+                onChanged: (value) {
+                  setState(() {
+                    age = value!;
+                  });
+                  return;
+                },
+                text: 'Enter your age',
+                textInputAction: TextInputAction.next,
+                validator: (value) => null,
+              ),
+              10.verticalSpace,
+              CustomTextField(
+                initValue: gender,
+                onChanged: (value) {
+                  setState(() {
+                    gender = value!;
+                  });
+                  return;
+                },
+                text: 'Enter your Gender',
+                textInputAction: TextInputAction.done,
+                validator: (value) => null,
+              ),
+              34.verticalSpace,
+              ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      Color(0xFF0601B4),
+                    ),
+                    alignment: Alignment.center,
+                  ),
+                  onPressed: () {
+                    if (_formKey4.currentState!.validate()) {
+                      User updatedUser = User(
+                          name: name,
+                          surname: surname,
+                          age: age,
+                          gender: gender);
+                      ref.read(userProvider.notifier).updateUser(updatedUser);
+                      Flexify.go(UserProfile());
+                    }
+                  },
+                  child: Text(
+                    'Update Profile',
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 14.rt,
+                        fontWeight: FontWeight.w500),
+                  ))
+            ],
+          ),
         ),
       ),
     );
