@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_dovie/main.dart';
 import 'package:movie_dovie/src/data/servises_auth.dart';
+import 'package:movie_dovie/src/screens/home_screen/home_screen.dart';
+import 'package:movie_dovie/src/screens/profile_screen.dart/widgets/user_account_configuration.dart';
 import 'package:movie_dovie/src/screens/tabbar_screen/bottom_navbar_screen.dart';
 
 import '../../widgets/background_image_widget.dart';
@@ -17,11 +20,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _auth = AuthServise();
   // ignore: unused_field
   ThemeMode _themeMode = ThemeMode.system;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-
+  bool isLoading = false;
+  bool Showpass = false;
   final _formKey = GlobalKey<FormState>();
   bool? isLogin;
   String? errorMessage;
@@ -58,36 +63,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
-  // Future<void> sinOut() async {
-  //   try {
-  //     await AuthServise().signOut();
-  //   } on FirebaseAuthException catch (e) {
-  //     _error = e.message!;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   actions: [
-      //     IconButton(
-      //         onPressed: () {
-      //           setState(() {
-      //             if (_themeMode == ThemeMode.light) {
-      //               _themeMode == ThemeMode.dark;
-      //               ;
-      //             } else if (_themeMode == ThemeMode.dark) {
-      //               _themeMode == ThemeMode.light;
-      //             } else {
-      //               _themeMode == ThemeMode.light;
-      //             }
-      //           });
-      //         },
-      //         icon: Icon(Icons.brightness_6))
-      //   ],
-      // ),
-      // key: _formKey,
       body: BackGroundImageWidget(
           child: Padding(
         padding: EdgeInsets.only(left: 21.rw, top: 101.rh, right: 20.rw),
@@ -150,6 +129,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 10.verticalSpace,
                 CustomTextField(
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            Showpass = !Showpass;
+                          });
+                        },
+                        icon: Icon(Showpass
+                            ? Icons.visibility
+                            : Icons.visibility_off)),
+                    obsureText: !Showpass,
                     controller: _passwordController,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -162,31 +151,46 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     text: 'Enter  password',
                     textInputAction: TextInputAction.done),
                 160.verticalSpace,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 66.rw),
-                  width: 204.rw,
-                  height: 50.rh,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFFFFF),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset('assets/images/google.png'),
-                      Text(
-                        'Sign-In with Google',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: const Color(0xFF000000),
-                          fontSize: 14.rt,
-                          fontWeight: FontWeight.w700,
+                isLoading
+                    ? const CircularProgressIndicator()
+                    : InkWell(
+                        onTap: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          await _auth.logInWithGoogle();
+                          setState(() {
+                            isLogin = false;
+                          });
+                          {
+                            Flexify.go(BottomNavbarScreen());
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 66.rw),
+                          width: 204.rw,
+                          height: 50.rh,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFFFFF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset('assets/images/google.png'),
+                              Text(
+                                'Sign-In with Google',
+                                style: TextStyle(
+                                  color: const Color(0xFF000000),
+                                  fontSize: 14.rt,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
                 20.verticalSpace,
                 InkWell(
                   onTap: () async {
@@ -239,12 +243,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ),
                 ),
-                // Container(
-                //   height: 50.rh,
-                //   width: 200.rw,
-                //   child:
-                //       errorMessage != null ? Text(errorMessage!) : Container(),
-                // ),
               ],
             ),
           ),

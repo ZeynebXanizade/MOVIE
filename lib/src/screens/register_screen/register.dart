@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexify/flexify.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_dovie/src/data/servises_auth.dart';
-
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/custom_text_field.dart';
 import '../login_screen.dart/login_screen.dart';
@@ -28,6 +25,7 @@ class _RegisterState extends ConsumerState<Register> {
   final _formKey1 = GlobalKey<FormState>();
   bool? isRegister;
   String? errorMessage;
+  bool Showpass = false;
 
   @override
   void initState() {
@@ -150,6 +148,16 @@ class _RegisterState extends ConsumerState<Register> {
                   ),
                   10.verticalSpace,
                   CustomTextField(
+                    obsureText: Showpass ? false : true,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            !Showpass;
+                          });
+                        },
+                        icon: Icon(Showpass
+                            ? Icons.visibility
+                            : Icons.visibility_off)),
                     controller: _passwordController,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -172,6 +180,16 @@ class _RegisterState extends ConsumerState<Register> {
                     ),
                   ),
                   CustomTextField(
+                    obsureText: true,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            !Showpass;
+                          });
+                        },
+                        icon: Icon(Showpass
+                            ? Icons.visibility
+                            : Icons.visibility_off)),
                     controller: _confirmPasswordController,
                     validator: (value) {
                       if (value != _passwordController.text) {

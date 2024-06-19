@@ -8,6 +8,7 @@ import '../../../widgets/card_widget.dart';
 
 class GridviewWidget extends ConsumerWidget {
   final FutureProvider<PreviewsModel?> provider;
+
   const GridviewWidget(this.provider, {super.key});
 
   @override

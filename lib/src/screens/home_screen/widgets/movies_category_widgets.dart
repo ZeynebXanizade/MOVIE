@@ -38,69 +38,77 @@ class _MoviesCategoryWidgetsState extends ConsumerState<MoviesCategoryWidgets>
         initialIndex: tabIndex,
         length: 4,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              flex: 1,
-              child: TabBar(
-                  dividerColor: Colors.transparent,
-                  indicatorColor: ConstantColor.whiteColor,
-                  isScrollable: true,
-                  controller: _tabController,
-                  indicatorPadding:
-                      EdgeInsets.symmetric(horizontal: 7.rw, vertical: 3.rh),
-                  indicatorWeight: 4.rs,
-                  labelPadding: const EdgeInsets.all(0),
-                  padding: const EdgeInsets.all(0),
-                  tabAlignment: TabAlignment.start,
-                  tabs: [
-                    Tab(
-                        child: TextButton(
-                      onPressed: () {
-                        _tabController.animateTo(0);
-                      },
-                      child: TextWidgetPoppins(
-                        text:
-                            AppLocalizations.of(context)!.nowplaying.toString(),
-                      ),
-                    )),
-                    Tab(
-                        child: TextButton(
-                      onPressed: () {
-                        _tabController.animateTo(1);
-                      },
-                      child: TextWidgetPoppins(
-                        text: AppLocalizations.of(context)!.upcoming.toString(),
-                      ),
-                    )),
-                    Tab(
-                        child: TextButton(
-                      onPressed: () {
-                        _tabController.animateTo(2);
-                      },
-                      child: TextWidgetPoppins(
-                        text: AppLocalizations.of(context)!.toprated.toString(),
-                      ),
-                    )),
-                    Tab(
-                        child: TextButton(
-                      onPressed: () {
-                        _tabController.animateTo(3);
-                      },
-                      child: TextWidgetPoppins(
-                        text: AppLocalizations.of(context)!.popular.toString(),
-                      ),
-                    )),
-                  ]),
+            TabBar(
+                dividerColor: Colors.transparent,
+                indicatorColor: ConstantColor.whiteColor,
+                isScrollable: true,
+                controller: _tabController,
+                indicatorPadding:
+                    EdgeInsets.symmetric(horizontal: 7.rw, vertical: 3.rh),
+                indicatorWeight: 4.rs,
+                labelPadding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
+                tabAlignment: TabAlignment.start,
+                tabs: [
+                  Tab(
+                      child: TextButton(
+                    onPressed: () {
+                      _tabController.animateTo(0);
+                    },
+                    child: TextWidgetPoppins(
+                      text: AppLocalizations.of(context)!.nowplaying.toString(),
+                    ),
+                  )),
+                  Tab(
+                      child: TextButton(
+                    onPressed: () {
+                      _tabController.animateTo(1);
+                    },
+                    child: TextWidgetPoppins(
+                      text: AppLocalizations.of(context)!.upcoming.toString(),
+                    ),
+                  )),
+                  Tab(
+                      child: TextButton(
+                    onPressed: () {
+                      _tabController.animateTo(2);
+                    },
+                    child: TextWidgetPoppins(
+                      text: AppLocalizations.of(context)!.toprated.toString(),
+                    ),
+                  )),
+                  Tab(
+                      child: TextButton(
+                    onPressed: () {
+                      _tabController.animateTo(3);
+                    },
+                    child: TextWidgetPoppins(
+                      text: AppLocalizations.of(context)!.popular.toString(),
+                    ),
+                  )),
+                ]),
+            SizedBox(
+              height: 20,
             ),
-            Expanded(
-              flex: 3,
+            SizedBox(
+              height: 500.rh,
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  GridviewWidget(apiProviderNowPlaying),
-                  GridviewWidget(apiProviderUpcoming),
-                  GridviewWidget(apiProviderTopRated),
-                  GridviewWidget(apiProviderPopular),
+                  GridviewWidget(
+                    apiProviderNowPlaying,
+                  ),
+                  GridviewWidget(
+                    apiProviderUpcoming,
+                  ),
+                  GridviewWidget(
+                    apiProviderTopRated,
+                  ),
+                  GridviewWidget(
+                    apiProviderPopular,
+                  ),
                 ],
               ),
             ),

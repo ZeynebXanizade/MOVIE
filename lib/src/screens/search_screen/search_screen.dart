@@ -9,6 +9,7 @@ import '../../widgets/background_image_widget.dart';
 import '../../widgets/card_widget.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/logo_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -27,9 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _isLoading = true;
     });
-
     final results = await _apiService.searchMovies(query: _controller.text);
-
     setState(() {
       _searchResults = results;
       _isLoading = false;
@@ -76,49 +75,69 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchResults() {
-    return ListView.builder(
-      itemCount: _searchResults?.results?.length ?? 0,
-      itemBuilder: (context, index) {
-        final result = _searchResults!.results![index];
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Flexify.go(DetailScreen(
-                      data: _searchResults!.results!, index: index));
-                },
-                child: ContainerWidget(
-                  data: _searchResults!.results!,
-                  index: index,
-                ),
-              ),
-              SizedBox(
-                width: 12.rw,
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: 180.rw,
-                    child: Text(
-                      result.title.toString(),
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.plusJakartaSans(
-                        textStyle: TextStyle(
-                            color: ConstantColor.whiteColor,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.rt),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
+    if (_searchResults?.results?.isEmpty ?? true) {
+      return Center(
+        child: Text(
+          AppLocalizations.of(context)!.notfound.toString(),
+          style: GoogleFonts.plusJakartaSans(
+            textStyle: TextStyle(
+              color: ConstantColor.whiteColor,
+              fontWeight: FontWeight.w400,
+              fontSize: 20.rt,
+            ),
           ),
-        );
-      },
+        ),
+      );
+    }
+
+    return SizedBox(
+      height: 500.rh,
+      child: ListView.builder(
+        itemCount: _searchResults?.results?.length ?? 0,
+        itemBuilder: (context, index) {
+          final result = _searchResults?.results?[index];
+          if (result == null) return SizedBox();
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Flexify.go(DetailScreen(
+                        data: _searchResults!.results!, index: index));
+                  },
+                  child: ContainerWidget(
+                    data: _searchResults!.results!,
+                    index: index,
+                  ),
+                ),
+                SizedBox(
+                  width: 12.rw,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        result.title ?? 'No title',
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.plusJakartaSans(
+                          textStyle: TextStyle(
+                              color: ConstantColor.whiteColor,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.rt),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

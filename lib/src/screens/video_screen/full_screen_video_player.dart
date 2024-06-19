@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domains/models/previews_model.dart';
+import '../../presentation/riverpod/watched_video_provider.dart';
 
-class FullScreenVideoPlayer extends StatefulWidget {
+class FullScreenVideoPlayer extends ConsumerStatefulWidget {
   final String videoId;
   final Results movie;
   const FullScreenVideoPlayer(
       {super.key, required this.videoId, required this.movie});
 
   @override
-  State<FullScreenVideoPlayer> createState() => _FullScreenVideoPlayerState();
+  ConsumerState<FullScreenVideoPlayer> createState() =>
+      _FullScreenVideoPlayerState();
 }
 
-class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
+class _FullScreenVideoPlayerState extends ConsumerState<FullScreenVideoPlayer> {
   late YoutubePlayerController _controller;
 
   @override
@@ -34,6 +36,8 @@ class _FullScreenVideoPlayerState extends State<FullScreenVideoPlayer> {
         mute: true,
       ),
     );
+
+    ref.read(watchedVideosProvider.notifier).addWatchedVideo(widget.movie);
   }
 
   @override

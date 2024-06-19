@@ -8,37 +8,51 @@ import 'package:movie_dovie/src/screens/home_screen/widgets/movies_category_widg
 import 'package:movie_dovie/src/widgets/background_image_widget.dart';
 import 'package:movie_dovie/src/widgets/logo_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late ScrollController scrollController;
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BackGroundImageWidget(
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: 21.rw, vertical: 10.rh),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Center(child: LogoWidget()),
-          SizedBox(
-            height: 20.rh,
-          ),
-          Text(
-            AppLocalizations.of(context)!.movieday.toString(),
-            style: GoogleFonts.dmSans(
-              textStyle: const TextStyle(
-                  color: ConstantColor.whiteColor,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24),
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Center(child: LogoWidget()),
+            SizedBox(
+              height: 20.rh,
             ),
-          ),
-          SizedBox(
-            height: 20.rh,
-          ),
-          const AllMoviesWidget(),
-          const Expanded(child: MoviesCategoryWidgets()),
-        ],
+            Text(
+              AppLocalizations.of(context)!.movieday.toString(),
+              style: GoogleFonts.dmSans(
+                textStyle: const TextStyle(
+                    color: ConstantColor.whiteColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24),
+              ),
+            ),
+            SizedBox(
+              height: 20.rh,
+            ),
+            const AllMoviesWidget(),
+            MoviesCategoryWidgets(),
+          ],
+        ),
       ),
     ));
   }

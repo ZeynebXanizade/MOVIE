@@ -1,8 +1,6 @@
   {
     "@@locale": "ru",
     "applanguage": "Язык приложения",
-    "theme": "Тема",
-    "services": "Услуги",
     "logout": "Выйти",
     "az": "Aзербайджанский",
     "en": "Aнглийский",
@@ -14,7 +12,12 @@
     "popular": "Популярный",
     "description": "Описание",
     "details": "Подробности",
-    "nofavoritesyet": "Пока нет избранных"
+    "nofavoritesyet": "Пока нет избранных",
+    "notfound": "Не найдено",
+    "releasedate": "Дата выпуска",
+    "originallanguage": "Язык оригинала",
+    "novideoswatchedyet": "Видео еще не просмотрено",
+    "exit": "Ты хочешь выйти?"
     
   }
   

@@ -1,8 +1,6 @@
  {
     "@@locale": "az",
     "applanguage": "Tətbiq Dili",
-    "theme": "Tema",
-    "services": "Xidmətlər",
     "logout": "Çıxış",
     "az": "Azərbaycan dili",
     "en": "İngilis dili",
@@ -14,6 +12,11 @@
     "popular": "Məşhur",
     "description": "Təsvir",
     "details": "Təfərrüatlar",
-    "nofavoritesyet": "Hələ favorit yoxdur"
+    "nofavoritesyet": "Hələ favorit yoxdur",
+    "notfound": "Tapılmadı",
+    "releasedate": "Buraxılış tarixi",
+    "originallanguage": "Orijinal dil",
+    "novideoswatchedyet": "Hələ heç bir videoya baxılmayıb",
+    "exit": "Çıxmaq istəyirsən?"
  }
   

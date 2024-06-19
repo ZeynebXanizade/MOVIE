@@ -6,6 +6,7 @@ import 'package:movie_dovie/src/screens/home_screen/home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_dovie/src/screens/profile_screen.dart/user_profile_screen.dart';
 import 'package:movie_dovie/src/screens/search_screen/search_screen.dart';
+import 'package:movie_dovie/src/screens/watched_video/watched_video_screen.dart';
 import 'widget/tab_widget.dart';
 
 class BottomNavbarScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen>
                   const HomeScreen(),
                   FavoriteScreen(),
                   SearchScreen(),
-                  HomeScreen(),
+                  WatchedVideosScreen(),
                   UserProfile()
                 ],
               ),

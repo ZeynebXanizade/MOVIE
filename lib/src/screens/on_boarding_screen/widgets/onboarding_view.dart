@@ -33,7 +33,7 @@ class OnBoardingView extends StatelessWidget {
           Text(
             models.title,
             style: GoogleFonts.dmSerifText()
-                .copyWith(fontSize: 40, color: ConstantColor.buttonColorsTwo),
+                .copyWith(fontSize: 35, color: ConstantColor.buttonColorsTwo),
             textAlign: TextAlign.center,
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
@@ -44,7 +44,7 @@ class OnBoardingView extends StatelessWidget {
           Text(
             models.subTitle,
             style: GoogleFonts.dmSerifText()
-                .copyWith(fontSize: 40, color: ConstantColor.buttonColorsTwo),
+                .copyWith(fontSize: 30, color: ConstantColor.buttonColorsTwo),
             textAlign: TextAlign.center,
             maxLines: 4,
             overflow: TextOverflow.ellipsis,

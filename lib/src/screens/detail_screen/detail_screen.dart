@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +13,7 @@ import '../../widgets/background_image_widget.dart';
 import '../../widgets/card_widget.dart';
 import '../../widgets/logo_widget.dart';
 import '../video_screen/full_screen_video_player.dart';
+
 class DetailScreen extends ConsumerStatefulWidget {
   final List<Results> data;
   final int index;
@@ -22,7 +22,6 @@ class DetailScreen extends ConsumerStatefulWidget {
     required this.data,
     required this.index,
   });
-
   @override
   ConsumerState<DetailScreen> createState() => _DetailScreenState();
 }
@@ -42,12 +41,16 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
     final isFavorite =
         ref.watch(favoriteMoviesProvider).any((movie) => movie.id == myData.id);
 
+    final String posterPath = myData.posterPath ?? '';
+
     return Scaffold(
         body: Stack(children: [
           Positioned.fill(
             child: BackGroundImageWidget(
-              image: NetworkImage(
-                  "https://image.tmdb.org/t/p/w500${myData.posterPath!}"),
+              image: posterPath.isNotEmpty
+                  ? NetworkImage("https://image.tmdb.org/t/p/w500$posterPath")
+                  : AssetImage('assets/images/placeholder.png')
+                      as ImageProvider,
               child: Center(),
             ),
           ),
@@ -77,7 +80,13 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                           ),
                           onTap: () {
                             favoriteMoviesNotifier.toggleFavorite(
-                                myData.id!, myData.title!, myData.posterPath!);
+                                myData.id!,
+                                myData.title!,
+                                myData.posterPath!,
+                                myData.originalLanguage!,
+                                myData.overview!,
+                                myData.voteaverage!,
+                                myData.releaseDate!);
                           },
                         ),
                       ],
@@ -106,7 +115,8 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                                 children: [
                                   SvgPicture.asset("assets/svg/star.svg"),
                                   Text(
-                                    myData.voteaverage!.toStringAsFixed(1),
+                                    myData.voteaverage?.toStringAsFixed(1) ??
+                                        'N/A',
                                     maxLines: 4,
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
@@ -128,7 +138,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 6),
                                 child: Text(
-                                  "${myData.title}",
+                                  myData.title ?? 'Unknown',
                                   maxLines: 4,
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
@@ -159,21 +169,23 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
         floatingActionButton: FloatingActionButton(
             backgroundColor: ConstantColor.buttonColorsOne,
             onPressed: () async {
-              final String videoId = (await fetchVideoData(myData.id!))!;
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => FullScreenVideoPlayer(
-                    videoId: videoId,
-                    movie: Results(
-                      id: myData.id,
-                      title: myData.title,
-                      posterPath: myData.posterPath,
-                      overview: myData.overview,
-                      voteaverage: myData.voteaverage,
+              final String? videoId = await fetchVideoData(myData.id!);
+              if (videoId != null) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => FullScreenVideoPlayer(
+                      videoId: videoId,
+                      movie: Results(
+                        id: myData.id,
+                        title: myData.title,
+                        posterPath: myData.posterPath,
+                        overview: myData.overview,
+                        voteaverage: myData.voteaverage,
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
+              }
             },
             child: Icon(
               Icons.play_arrow,

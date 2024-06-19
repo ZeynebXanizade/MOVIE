@@ -1,4 +1,3 @@
-import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domains/models/previews_model.dart';
@@ -33,6 +32,12 @@ class _DetailTabbarWidgetState extends ConsumerState<DetailTabbarWidget>
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final tabIndex = ref.watch(tabProvider);
     final myData = widget.data[widget.index];
@@ -40,68 +45,72 @@ class _DetailTabbarWidgetState extends ConsumerState<DetailTabbarWidget>
     int initialIndex = (tabIndex >= 0 && tabIndex < 2) ? tabIndex : 0;
 
     return DefaultTabController(
-        initialIndex: initialIndex,
-        length: 2,
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: TabBar(
-                  dividerColor: Colors.transparent,
-                  indicatorColor: ConstantColor.whiteColor,
-                  isScrollable: true,
-                  controller: _tabController,
-                  indicatorPadding:
-                      EdgeInsets.symmetric(horizontal: 7.rw, vertical: 3.rh),
-                  indicatorWeight: 4.rs,
-                  labelPadding: const EdgeInsets.all(0),
-                  padding: const EdgeInsets.all(0),
-                  tabAlignment: TabAlignment.start,
-                  tabs: [
-                    Tab(
-                        child: TextButton(
-                      onPressed: () {
-                        _tabController.animateTo(0);
-                      },
-                      child: TextWidgetPoppins(
-                        text: AppLocalizations.of(context)!
-                            .description
-                            .toString(),
-                      ),
-                    )),
-                    Tab(
-                        child: TextButton(
-                      onPressed: () {
-                        _tabController.animateTo(1);
-                      },
-                      child: TextWidgetPoppins(
-                        text: AppLocalizations.of(context)!.details.toString(),
-                      ),
-                    )),
-                  ]),
-            ),
-            Expanded(
-              flex: 3,
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  TextWidgetPoppins(
-                    text: myData.overview.toString(),
+      initialIndex: initialIndex,
+      length: 2,
+      child: Column(
+        children: [
+          TabBar(
+            controller: _tabController,
+            indicatorColor: ConstantColor.whiteColor,
+            isScrollable: true,
+            indicatorPadding:
+                EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
+            indicatorWeight: 4.0,
+            tabs: [
+              Tab(
+                child: TextButton(
+                  onPressed: () {
+                    _tabController.animateTo(0);
+                  },
+                  child: TextWidgetPoppins(
+                    text: AppLocalizations.of(context)!.description,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                ),
+              ),
+              Tab(
+                child: TextButton(
+                  onPressed: () {
+                    _tabController.animateTo(1);
+                  },
+                  child: TextWidgetPoppins(
+                    text: AppLocalizations.of(context)!.details,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextWidgetPoppins(
+                    text: myData.overview ?? 'No overview available',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextWidgetPoppins(
-                          text: "Release date :  ${myData.releaseDate}"),
+                        text:
+                            "${AppLocalizations.of(context)!.releasedate} : ${myData.releaseDate ?? 'Unknown'}",
+                      ),
+                      SizedBox(height: 8.0),
                       TextWidgetPoppins(
-                          text: "Original title :  ${myData.originalLanguage}"),
+                        text:
+                            "${AppLocalizations.of(context)!.originallanguage} : ${myData.originalLanguage ?? 'Unknown'}",
+                      ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -17,14 +17,26 @@ class FavoriteMoviesNotifier extends StateNotifier<List<Results>> {
     state = state.where((movie) => movie.id != id).toList();
   }
 
-  void toggleFavorite(int id, String title, String posterPath) {
+  void toggleFavorite(int id, String title, String posterPath,
+      String originalLanguage, String overview, double voteaverage, String releaseDate) {
     final Results existingMovie = state.firstWhere(
       (movie) => movie.id == id,
       orElse: () => Results(
-          id: -1, title: '', posterPath: ''), 
+          id: -1,
+          title: '',
+          posterPath: '',
+          originalLanguage: "",
+          overview: "",
+          voteaverage: 0),
     );
     if (existingMovie.id == -1) {
-      addFavorite(Results(id: id, title: title, posterPath: posterPath));
+      addFavorite(Results(
+          id: id,
+          title: title,
+          posterPath: posterPath,
+          originalLanguage: originalLanguage,
+          overview: overview,
+          voteaverage: voteaverage, releaseDate:releaseDate ));
     } else {
       removeFavorite(id);
     }

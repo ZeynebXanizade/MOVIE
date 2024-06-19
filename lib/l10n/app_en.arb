@@ -1,8 +1,6 @@
  {
     "@@locale": "en",
     "applanguage": "App Language",
-    "theme": "Theme",
-    "services": "Services",
     "logout": "Logout",
     "az": "Azerbaijani",
     "en": "English",
@@ -14,6 +12,11 @@
     "popular": "Popular",
     "description": "Description",
     "details": "Details",
-    "nofavoritesyet": "No favorites Yet"
+    "nofavoritesyet": "No favorites Yet",
+    "notfound": "Not found",
+    "releasedate": "Release date",
+    "originallanguage": "Original language",
+    "novideoswatchedyet": "No videos watched yet",
+    "exit": "You want to get out?"
  }
   
