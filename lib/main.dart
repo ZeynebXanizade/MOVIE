@@ -7,11 +7,12 @@ import 'package:get/get.dart';
 import 'package:movie_dovie/src/presentation/providers/language_change_controller.dart';
 import 'package:movie_dovie/src/screens/login_screen.dart/login_screen.dart';
 import 'package:movie_dovie/src/screens/on_boarding_screen/onboarding_screen.dart';
-import 'package:movie_dovie/src/screens/tabbar_screen/bottom_navbar_screen.dart';
+import 'package:movie_dovie/src/screens/tabbar/bottom_tabbar.dart';
 import 'package:provider/provider.dart' as provider;
 import 'firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class MovieDovie extends StatelessWidget {
         ],
         child: provider.Consumer<AppLanguage>(
             builder: (context, appLanguage, child) {
-          if (appLanguage.appLocal == null) {
+          if (appLanguage.appLocale == null) {
             appLanguage.fetchLocale();
             if (locale.isEmpty) {
               appLanguage.changeLanguage(const Locale('en'));
@@ -59,9 +60,9 @@ class MovieDovie extends StatelessWidget {
               home: OnBoardingScreen(),
               locale: locale == ''
                   ? const Locale('en')
-                  : appLanguage.appLocal == null
+                  : appLanguage.appLocale == null
                       ? Locale(locale)
-                      : appLanguage.appLocal,
+                      : appLanguage.appLocale,
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
@@ -92,7 +93,7 @@ class MovieDovie extends StatelessWidget {
                       case '/onboarding':
                         return OnBoardingScreen();
                       case '/bottomNavbar':
-                        return BottomNavbarScreen();
+                        return BottomTabbar();
                       default:
                         return OnBoardingScreen();
                     }

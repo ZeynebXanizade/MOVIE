@@ -9,14 +9,14 @@ import 'package:movie_dovie/src/screens/search_screen/search_screen.dart';
 import 'package:movie_dovie/src/screens/watched_video/watched_video_screen.dart';
 import 'widget/tab_widget.dart';
 
-class BottomNavbarScreen extends StatefulWidget {
-  const BottomNavbarScreen({super.key});
+class BottomTabbar extends StatefulWidget {
+  const BottomTabbar({super.key});
 
   @override
-  State<BottomNavbarScreen> createState() => _BottomNavbarScreenState();
+  State<BottomTabbar> createState() => _BottomTabbarState();
 }
 
-class _BottomNavbarScreenState extends State<BottomNavbarScreen>
+class _BottomTabbarState extends State<BottomTabbar>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late int activeIndex;

@@ -1,6 +1,7 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movie_dovie/src/global/const/colors.dart';
 import 'package:provider/provider.dart';
 import '../../../presentation/providers/language_change_controller.dart';
 
@@ -33,16 +34,18 @@ class _AppLanguagesState extends State<AppLanguages> {
                     const Icon(
                       Icons.language,
                       size: 30,
+                      color: ConstantColor.whiteColor,
                     ),
                     15.horizontalSpace,
                     Text(
                       AppLocalizations.of(context)!.applanguage.toString(),
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                          fontSize: 18, color: ConstantColor.whiteColor),
                     ),
                   ],
                 ),
                 PopupMenuButton<Language>(
-                  color: Theme.of(context).popupMenuTheme.color,
+                  iconColor: ConstantColor.whiteColor,
                   initialValue: selectedMenu,
                   onSelected: (Language item) {
                     if (Language.english.name == item.name) {
@@ -62,7 +65,8 @@ class _AppLanguagesState extends State<AppLanguages> {
                         value: Language.azerbaijani,
                         child: Text(
                           AppLocalizations.of(context)!.az.toString(),
-                          style: Theme.of(context).popupMenuTheme.textStyle,
+                          style:
+                              TextStyle(color: ConstantColor.buttonColorsOne),
                         )),
                     PopupMenuItem<Language>(
                         onTap: () {
@@ -71,7 +75,8 @@ class _AppLanguagesState extends State<AppLanguages> {
                         value: Language.english,
                         child: Text(
                           AppLocalizations.of(context)!.en.toString(),
-                          style: Theme.of(context).popupMenuTheme.textStyle,
+                          style:
+                              TextStyle(color: ConstantColor.buttonColorsOne),
                         )),
                     PopupMenuItem<Language>(
                         onTap: () {
@@ -80,7 +85,8 @@ class _AppLanguagesState extends State<AppLanguages> {
                         value: Language.russian,
                         child: Text(
                           AppLocalizations.of(context)!.ru.toString(),
-                          style: Theme.of(context).popupMenuTheme.textStyle,
+                          style:
+                              TextStyle(color: ConstantColor.buttonColorsOne),
                         )),
                   ],
                 ),

@@ -19,6 +19,7 @@ class WatchedVideosScreen extends ConsumerWidget {
             ? Center(
                 child: Text(
                 AppLocalizations.of(context)!.novideoswatchedyet.toString(),
+                style: TextStyle(color: ConstantColor.whiteColor),
               ))
             : Padding(
                 padding: const EdgeInsets.all(15.0),

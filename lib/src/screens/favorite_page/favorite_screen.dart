@@ -37,6 +37,7 @@ class FavoriteScreen extends ConsumerWidget {
                       padding: EdgeInsets.all(20.0),
                       child: Text(
                         AppLocalizations.of(context)!.nofavoritesyet.toString(),
+                        style: TextStyle(color: ConstantColor.whiteColor),
                       ),
                     ),
                   )

@@ -48,13 +48,13 @@ class Results {
 
   Results.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    originalLanguage = json['original_language'];
+    originalLanguage = json['original_language'] ?? 'Unknown';
     originalTitle = json['original_title'];
     overview = json['overview'];
     popularity = json['popularity'];
     voteaverage = json['vote_average'];
     posterPath = json['poster_path'];
-    releaseDate = json['release_date'];
+    releaseDate = json['release_date'] ?? 'Unknown';
     title = json['title'];
   }
 
